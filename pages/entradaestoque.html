@@ -1,0 +1,95 @@
+<div ng-controller="entradaestoqueCtrl">
+    </br>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">Entrada de Produto no Estoque</div>
+            <div class="panel-body">
+                <div class="form-group col-sm-4 col-md-2">
+                    <label>Cód.Barras</label>
+                    <input kendo-combo-box
+                           class="form-control"
+                           k-data-source="produto.ds"
+                           k-data-text-field="'codigoBarra'"
+                           k-data-value-field="'codigoBarra'"
+                           k-select="produto.fSelect"
+                           k-filter="'contains'"
+                           ng-model="produto.selected.codigoBarra"/>
+                </div>
+                <div class="form-group col-sm-8 col-md-4">
+                    <label>Descrição</label>
+                    <input kendo-combo-box
+                           class="form-control"
+                           k-auto-width="true"
+                           k-template="'#:descricao# / #:especificacao#'"
+                           k-data-source="produto.ds"
+                           k-data-value-field="'idProdutoConsumo'"
+                           k-data-text-field="'descricao'"
+                           k-select="produto.fSelect"
+                           k-filter="'contains'"
+                           ng-model="produto.selected.idProdutoConsumo"/>
+                </div>
+                <div class="form-group col-sm-8 col-md-4">
+                    <label>Especificação</label>
+                    <input kendo-box
+                           class="form-control"
+                           ng-disabled="true"
+                           ng-model="produto.selected.especificacao"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-2">
+                    <label>Unidade</label>
+                    <input kendo-combo-box
+                           class="form-control"
+                           ng-disabled="true"
+                           ng-model="unidade.selected.unidade"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    <label>Fabricante</label>
+                    <input kendo-combo-box
+                           class="form-control"
+                           k-data-source="fabricante.ds"
+                           k-data-text-field="'fabricante'"
+                           k-data-value-field="'idFabricante'"
+                           k-filter="'contains'"
+                           k-select="fabricante.fSelect"
+                           ng-model="fabricante.selected.idFabricante"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-2">
+                    <label>Fabricação</label>
+                    <input kendo-date-picker
+                           k-format="'dd/MMM/yyyy'"
+                           k-ng-model="consumo.selected.dtFabricacao"
+                           class="form-control"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-2">
+                    <label>Validade</label>
+                    <input kendo-date-picker
+                           class="form-control"
+                           k-format="'dd/MMM/yyyy'"
+                           k-ng-model="consumo.selected.dtValidade"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-2">
+                    <label>Quantidade</label>
+                    <input kendo-text-box
+                           class="form-control"
+                           ng-model="consumo.selected.quantidadeEmEstoque"/>
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    <label>Dt.Entrada</label>
+                    <input kendo-date-time-picker
+                           class="form-control"
+                           k-format="'dd/MMM/yyyy - hh:mm tt'"
+                           ng-model="str"
+                           ng-disabled="true"
+                           k-ng-model="consumo.selected.dtQuandoRecebeu"/>
+                </div>
+            </div>  <!--panel body-->
+            <div class="panel-footer">
+                <kendo-button icon="'k-icon k-i-plus'" class="k-primary" ng-click="consumo.fSalvar()">Salvar
+                </kendo-button>
+                <kendo-button icon="'k-icon k-i-cancel'" ng-click="consumo.fClear()">Limpar</kendo-button>
+            </div>
+        </div>  <!--panel-->
+    </div>  <!--container-->
+
+    <kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>
+</div>
