@@ -105,14 +105,14 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
         selected: {
             idProdutoConsumo: null, codigoBarra: null,
             descricao: null, especificacao: null,
-            idUnidade: myUnidade.selected
+            idUnidade: null
         },
         fClear: function () {
             myUnidade.fClear();
             myProduto.selected = {
                 idProdutoConsumo: null, codigoBarra: null,
                 descricao: null, especificacao: null,
-                idUnidade: myUnidade.selected
+                idUnidade: null
             };
         },
         fSelect: function (e) {
@@ -120,7 +120,6 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
             if (e.item !== null) {
                 myProduto.selected = e.dataItem;
                 myUnidade.selected = e.dataItem.idUnidade;
-                myConsumo.selected.idProduto = e.dataItem;
                 myConsumo.selected.dtQuandoRecebeu = new Date();
                 //if (e.dataItem.nome !== null)
                 //    mycontact.setFilter(e.dataItem);
@@ -142,10 +141,8 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
         },
         fSelect: function (e) {
             //this é o .kendoComboBox
-            //copiar um a um, devido a referencia com myConsumo
             if (e.item !== null) {
-                myFabrica.selected.idFabricante = e.dataItem.idFabricante;
-                myFabrica.selected.fabricante = e.dataItem.fabricante;
+                myFabrica.selected = e.dataItem;
             }
         }
     };
@@ -154,8 +151,8 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
     var myConsumo = {
             ds: myapp.ds.consumo,
             selected: {
-                idConsumo: null, idProduto: myProduto.selected,
-                idFabricante: myFabrica.selected,
+                idConsumo: null, idProduto: null,
+                idFabricante: null,
                 dtFabricacao: null, dtValidade: null,
                 quantidadeEmEstoque: null,
                 dtQuandoRecebeu: null,
@@ -165,50 +162,63 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
                 myProduto.fClear();
                 myFabrica.fClear();
                 myConsumo.selected = {
-                    idConsumo: null, idProduto: myProduto.selected,
-                    idFabricante: myFabrica.selected,
-                    dtFabricacao: null, dtValidade: null,
+                    idConsumo: null, idProduto: null,
+                    idFabricante: null,
+                    dtFabricacao: null,
+                    dtValidade: null,
                     quantidadeEmEstoque: null,
                     dtQuandoRecebeu: null, idQuemRecebeu: null
                 };
             },
             fSalvar: function () {
+                if (myProduto.selected.descricao != null) {
+                    myConsumo.selected.idProduto = myProduto.selected;
+                }
+                if (myFabrica.selected.fabricante != null) {
+                    myConsumo.selected.idFabricante = myFabrica.selected;
+                }
                 console.log(JSON.stringify(myConsumo.selected));
                 myapp.ds.consumo.add(myConsumo.selected);
                 myapp.ds.consumo.sync();
-                myConsumo.fClear();
+                //myConsumo.fClear();
             },
-            fRequestEnd: function (e) {
-                if (e.type=='create') {
-                    console.log(JSON.stringify(e.response));
-                    myConsumo.selected.idConsumo = e.response.idConsumo;
-                    console.log(JSON.stringify(e.response));
+            fRequestEnd: function(e){
+                var i,newdate;
+                //console.log(JSON.stringify(e.type));
+                //console.log(JSON.stringify(e.sender));
+                //console.log(JSON.stringify(e.response));
+                if(e.type=='read') {
+                    for (i = 0; i < e.response.length; i++) {
+                        e.response[i].dtQuandoRecebeu = new Date(e.response[i].dtQuandoRecebeu);
+                    }
+                }else if(e.type=='create'){
+                    e.response.dtQuandoRecebeu = new Date(e.response.dtQuandoRecebeu);
                 }
             },
             onGridRowSelect: function (data, dataItem, columns) {
-                // myConsumo.selected = dataItem;
-                // myProduto.selected = dataItem.idProduto;
-                // myUnidade.selected = myProduto.selected.idUnidade;
-                // myFabrica.selected = dataItem.idFabricante;
+                myConsumo.selected = dataItem;
+                myProduto.selected = dataItem.idProduto;
+                myUnidade.selected = myProduto.selected.idUnidade;
+                myFabrica.selected = dataItem.idFabricante;
                 // console.log(JSON.stringify(dataItem));
             }
         }
     ;
     $scope.consumo = myConsumo;
-    myapp.ds.consumo.bind('requestEnd',myConsumo.fRequestEnd);
+    myapp.ds.consumo.bind('requestEnd', myConsumo.fRequestEnd);
 
     //GRID KENDO
     $scope.mainGridOptions = {
         dataSource: myapp.ds.consumo,
         //height: 550,
         selectable: "row",
-        filterable: true,
-        sortable: true,
+        //filterable: true,
+        //sortable: true,
         pageable: true,
         reorderable: true,
         resizable: true,
-        //editable: "inline",
-        //toolbar: ["create"],
+        editable: "inline",
+        toolbar: ["create"],
         columns: [
             {
                 field: "idConsumo", title: "ID", width: "10%"
@@ -227,12 +237,13 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
             },
             // {field: "idFabricante", title: "Fabricante"},
             // {field: "dtFabricacao", title: "Dt.Fabric.", format: "{0:dd/MMM/yyyy}"},
-            {field: "dtValidade", title: "Dt.Validade", format: "{0:dd/MMM/yyyy}"},
-            {field: "quantidadeEmEstoque", title: "Qtd.", validation: {min: 0, required: true}}
+            {field: "dtValidade", title: "Dt.Validade", width: "10%"},
+            {field: "dtQuandoRecebeu", width: "10%"},
+            {field: "quantidadeEmEstoque", title: "Qtd.", validation: {min: 0, required: true}},
 
             //template: "#=idProduto.descricao idProduto.especificacao#"
             //{field: "fabricante", title: "Fabricante", width: "40%"},
-            //{command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
+            {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
         ]
     };
 });

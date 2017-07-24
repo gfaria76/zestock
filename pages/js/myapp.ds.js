@@ -14,6 +14,16 @@ myapp.btEdit = {name: "edit", text: {edit: '', update: '', cancel: ''}};
 myapp.btSave = {name: "save", text: ''};
 myapp.btCancel = {name: "cancel", text: ''};
 
+myapp['strToDate'] = function (str) {
+    var ret = kendo.parseDate(str);
+    if( str.length == 13 ) { //é um int como str
+        ret = kendo.parseInt(str);
+        ret = kendo.parseDate(ret);
+    }
+    ret = kendo.toString(ret,'dd/MMM/yyyy');
+    return ret;
+    //dtValidade==null?'':kendo.toString( kendo.parseDate(dtValidade), 'dd/MMM/yyyy')
+};
 
 myapp.setTransport = function (tableName, idName) {
     var tableUrl = this.appUrl + tableName;
@@ -47,7 +57,7 @@ myapp.setTransport = function (tableName, idName) {
         parameterMap: function (data, operation) {
             console.log(JSON.stringify(operation) + ' ' + tableName);
             if (operation === "create" || operation === "update") {
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
                 return JSON.stringify(data);
             }
             //return data;
@@ -116,7 +126,7 @@ myapp.dsi.consumo = {
                 idConsumo: {type: "number", editable: false, defaultValue: null},
                 idProduto: {defaultValue: {idProdutoConsumo: 1, descricao: ''}},
                 idFabricante: {defaultValue: null},
-                dtFabricacao: {type: "date", defaultValue: null},
+                //dtFabricacao: {type: "date", defaultValue: null},
                 dtValidade: {type: "date", defaultValue: null},
                 quantidadeEmEstoque: {type: "number"},
                 dtQuandoRecebeu: {type: "date", defaultValue: null},

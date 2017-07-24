@@ -1,5 +1,5 @@
-<div ng-controller="entradaestoqueCtrl">
-    </br>
+<br ng-controller="entradaestoqueCtrl">
+    <br/>
     <div class="container-fluid">
         <div class="panel panel-default">
             <div class="panel-heading">Entrada de Produto no Estoque</div>
@@ -77,10 +77,10 @@
                     <label>Dt.Entrada</label>
                     <input kendo-date-time-picker
                            class="form-control"
-                           k-format="'dd/MMM/yyyy - hh:mm tt'"
-                           ng-model="str"
+                           k-format="'dd/MMM/yyyy - hh:mm'"
                            ng-disabled="true"
-                           k-ng-model="consumo.selected.dtQuandoRecebeu"/>
+                           k-change="consumo.fChangeQdoRecebeu"
+                           k-ng-model="consumo.dtQuandoRecebeu"/>
                 </div>
             </div>  <!--panel body-->
             <div class="panel-footer">
@@ -90,6 +90,7 @@
             </div>
         </div>  <!--panel-->
     </div>  <!--container-->
-
+    {{consumo.selected}}
     <kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>
+    <!--<kendo-grid options="mainGridOptions"></kendo-grid>-->
 </div>
