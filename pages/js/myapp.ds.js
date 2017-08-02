@@ -3,7 +3,14 @@ var myapp = {
     dsi: {},
     dropdown: {},
     appUrl: "http://localhost:8080/EstoqueREST/webresources/",
-    user: {},
+    user: {
+        idUsuario: 1,
+        nomeUsuario: "Gedson Faria",
+        registroFuncional: null,
+        email: "gedson.faria@ufms.br",
+        senha: "123",
+        theme: null
+    },
     notification: null
 };
 //colocar no index.htm
@@ -47,7 +54,7 @@ myapp.setTransport = function (tableName, idName) {
         parameterMap: function (data, operation) {
             console.log(JSON.stringify(operation) + ' ' + tableName);
             if (operation === "create" || operation === "update") {
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
                 return JSON.stringify(data);
             }
             //return data;
@@ -98,7 +105,7 @@ myapp.dsi.unidade = {
             id: 'idUnidade',
             fields: {
                 idUnidade: {type: "number", editable: false, defaultValue: null},
-                unidade: {type: "string"}
+                unidade: {type: "string", defaultValue: "1"}
             }
         }
     }
@@ -116,10 +123,10 @@ myapp.dsi.consumo = {
                 idConsumo: {type: "number", editable: false, defaultValue: null},
                 idProduto: {defaultValue: {idProdutoConsumo: 1, descricao: ''}},
                 idFabricante: {defaultValue: null},
-                dtFabricacao: {type: "date", defaultValue: null},
-                dtValidade: {type: "date", defaultValue: null},
+                dtFabricacao: {type: "string", defaultValue: null},
+                dtValidade: {type: "string", defaultValue: null},
                 quantidadeEmEstoque: {type: "number"},
-                dtQuandoRecebeu: {type: "date", defaultValue: null},
+                dtQuandoRecebeu: {type: "string", defaultValue: null},
                 idQuemRecebeu: {defaultValue: {idUsuario: 1, usuario: ""}}
             }
         }
@@ -139,6 +146,96 @@ myapp.dsi.produto = {
                 descricao: {type: "string"},
                 especificacao: {type: "string"},
                 idUnidade: {defaultValue: {idUnidade: 1, unidade: ""}}
+            }
+        }
+    }
+};
+
+myapp.dsi.bemPermanente = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbbempermanente', 'idBemPermanente'),
+    // sort: {field: "descricao", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idBemPermanente',
+            fields: {
+                idBemPermanente: {type: "serial", editable: false, defaultValue: null},
+                descricaoBem: {type: "string", defaultValue: ' '},
+                dtEntrada: {type: "string", defaultValue: null},
+                salaAlocacao: {defaultValue: null},
+                observacao: {type: "string"},
+                numPatrimonio: {type: "string", defaultValue: null},
+                idEstadoConservacao: {defaultValue: {idEstadoBemPermanente: 1}},
+                idCoResponsavel: {defaultValue: {idUsuario: 1}}
+            }
+        }
+    }
+};
+
+myapp.dsi.estadoBemPermanente = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbestadobempermanente', 'idEstadoBemPermanente'),
+    // sort: {field: "fabricante", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idEstadoBemPermanente',
+            fields: {
+                idEstadoBemPermanente: {type: "number", editable: false, defaultValue: null},
+                descricaoEstadoFisico: {type: "string", defaultValue: null}
+            }
+        }
+    }
+};
+
+myapp.dsi.locaisLocacao = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tblocaislotacaobempermanente', 'idLocaLotacao'),
+    // sort: {field: "descricao", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idLocaLotacao',
+            fields: {
+                idLocaLotacao: {type: "number", editable: false, defaultValue: null},
+                unidadeSetorial: {defaultValue: null},
+                setor: {type: "string"},
+                sala: {type: "string", defaultValue: null}
+            }
+        }
+    }
+};
+
+myapp.dsi.emprestimoBemPermanente = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbemprestimobempermanente', 'idPedidoEmprestimo'),
+    // sort: {field: "descricao", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idPedidoEmprestimo',
+            fields: {
+                idPedidoEmprestimo: {type: "number", editable: false, defaultValue: null},
+                justificativa: {type: "string", defaultValue: ' '},
+                dtPrevistaRetirada: {type: "string", defaultValue: null},
+                dtPrevistaDevolucao: {type: "string", defaultValue: null},
+                idSolicitante: {defaultValue: {idUsuario: 1, nomeUsuario: ""}},
+                idNumPatrimonio: {defaultValue: {idBemPermanente: 1, numPatrimonio: ""}}
+            }
+        }
+    }
+};
+
+myapp.dsi.fasesEmprestimoBemPermanente = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbfasesemprestimobempermanente', 'idFasesEmprestimo'),
+    // sort: {field: "descricao", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idFasesEmprestimo',
+            fields: {
+                idFasesEmprestimo: {type: "number", editable: false, defaultValue: null},
+                idPedidoEmprestimo: {defaultValue: {idPedidoEmprestimo: 1}},
+                dtStatus: {type: "string", defaultValue: null},
+                idStatus: {defaultValue: {idStatus: 1}},
+                idResponsavel: {defaultValue: {idUsuario: 1, nomeUsuario: ""}}
             }
         }
     }

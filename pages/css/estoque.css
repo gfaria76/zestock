@@ -12,3 +12,11 @@ and open the template in the editor.
     min-width: 12px;
     width: 40px;
 }
+
+.row-eq-height {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+}

@@ -78,7 +78,7 @@
                     <input kendo-date-time-picker
                            class="form-control"
                            k-format="'dd/MMM/yyyy - hh:mm tt'"
-                           ng-model="str"
+                           ng-model="str   "
                            ng-disabled="true"
                            k-ng-model="consumo.selected.dtQuandoRecebeu"/>
                 </div>
@@ -90,6 +90,7 @@
             </div>
         </div>  <!--panel-->
     </div>  <!--container-->
-
-    <kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>
+    {{consumo.selected}}
+    <!--<kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>-->
+    <kendo-grid options="mainGridOptions"></kendo-grid>
 </div>

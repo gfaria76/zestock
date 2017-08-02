@@ -1,0 +1,21 @@
+<div ng-controller="pedidosCtrl">
+    <kendo-grid options="mainGridOptions">
+        <div k-detail-template>
+            <kendo-tabstrip>
+                <ul>
+                    <li class="k-state-active">Status do Empréstimo</li>
+                    <li>Justificativa</li>
+                </ul>
+                <div>
+                    <div kendo-grid k-options="detailGridOptions(dataItem)"></div>
+                </div>
+                {{dataItem}}
+                <div>
+                    <ul class="contact-info-form">
+                        <li><input class="k-textbox" ng-model="dataItem.justificativa"/></li>
+                    </ul>
+                </div>
+            </kendo-tabstrip>
+        </div>
+    </kendo-grid>
+</div>
