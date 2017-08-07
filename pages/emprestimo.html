@@ -1,0 +1,71 @@
+<div ng-controller="emprestimoCtrl">
+    <br/>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">Emprestimo de Bens Permanentes</div>
+            <div class="panel-body">
+                <div class="row row-eq-height">
+                    <div class="panel col-md-9">
+                        <div class="form-group col-sm-8 col-md-4">
+                            <label>Patrimonio</label>
+                            <input kendo-combo-box
+                                   class="form-control"
+                                   k-auto-width="true"
+                                   k-data-source="bemPermanente.ds"
+                                   k-data-value-field="'numPatrimonio'"
+                                   k-data-text-field="'numPatrimonio'"
+                                   k-select="bemPermanente.fSelect"
+                                   k-filter="'contains'"
+                                   ng-model="bemPermanente.selected.numPatrimonio"/>
+                        </div>
+                        <div class="form-group col-sm-8 col-md-5">
+                            <label>Descricao</label>
+                            <input kendo-box
+                                   class="form-control"
+                                   ng-disabled="true"
+                                   ng-model="bemPermanente.selected.descricaoBem"/>
+                        </div>
+                        <div class="form-group col-sm-4 col-md-3">
+                            <label>Solicitante</label>
+                            <input class="form-control"
+                                   ng-disabled="true"
+                                   ng-model="emprestimoBemPermanente.selected.idSolicitante"/>
+                        </div>
+                        <div class="form-group col-sm-4 col-md-3">
+                            <label>Dt.Prevista de Retirada</label>
+                            <input kendo-date-time-picker
+                                   class="form-control"
+                                   k-format="'dd/MMM/yyyy - HH:mm '"
+                                   k-ng-model="emprestimoBemPermanente.selected.dtPrevistaRetirada"/>
+                        </div>
+                        <div class="form-group col-sm-4 col-md-3">
+                            <label>Dt.Prevista de Devolução</label>
+                            <input kendo-date-picker
+                                   class="form-control"
+                                   k-format="'dd/MMM/yyyy'"
+                                   k-ng-model="emprestimoBemPermanente.selected.dtPrevistaDevolucao"/>
+                        </div>
+                    </div>  <!--panel body-->
+                    <div class="panel col-md-3">
+                        <div class="form-group" style="height:100%">
+                            <label>Justificativa</label>
+                            <textarea class="form-control"
+                                      style="height:100%"
+                                      ng-model="emprestimoBemPermanente.selected.justificativa"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <kendo-button icon="'k-icon k-i-plus'" class="k-primary" ng-click="emprestimoBemPermanente.fSalvar()">
+                    Salvar
+                </kendo-button>
+                <kendo-button icon="'k-icon k-i-cancel'" ng-click="emprestimoBemPermanente.fClear()">Limpar
+                </kendo-button>
+            </div>
+        </div>  <!--panel-->
+    </div>  <!--container-->
+    {{emprestimoBemPermanente.selected}}
+    <!--<kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>-->
+    <!--<kendo-grid options="mainGridOptions"></kendo-grid>-->
+</div>

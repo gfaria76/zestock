@@ -39,6 +39,22 @@ function config($routeProvider, $locationProvider) {
             templateUrl: 'pages/saidaestoque.html',
             controller: 'saidaestoqueCtrl'
         })
+        .when('/emprestimo', {
+            templateUrl: 'pages/emprestimo.html',
+            controller: 'emprestimoCtrl'
+        })
+        .when('/listagem', {
+            templateUrl: 'pages/listagem.html',
+            controller: 'bemPermanenteCtrl'
+        })
+        .when('/pedidos', {
+            templateUrl: 'pages/pedidos.html',
+            controller: 'pedidosCtrl'
+        })
+        .when('/lotacoes', {
+            templateUrl: 'pages/lotacoes.html',
+            controller: 'lotacoesCtrl'
+        })
 
             // Caso não seja nenhum desses, 
             // redirecione para a rota '/'
