@@ -2,9 +2,11 @@ var myapp = {
     ds: {},
     dsi: {},
     dropdown: {},
-    appUrl: "http://localhost:8080/EstoqueREST/webresources/",
+    appUrl: "http://localhost:8080/EstoqueRest/webresources/",
     user: {},
-    notification: null
+    notification: null,
+    dateformat: "{0:dd/MMM/yyyy}",
+    datetimeformat: "{0:dd/MMM/yyyy HH:mm}"
 };
 //colocar no index.htm
 //<span kendo-notification="myapp.notification" id="notification"></span>
@@ -14,15 +16,11 @@ myapp.btEdit = {name: "edit", text: {edit: '', update: '', cancel: ''}};
 myapp.btSave = {name: "save", text: ''};
 myapp.btCancel = {name: "cancel", text: ''};
 
-myapp['strToDate'] = function (str) {
-    var ret = kendo.parseDate(str);
-    if( str.length == 13 ) { //é um int como str
-        ret = kendo.parseInt(str);
-        ret = kendo.parseDate(ret);
-    }
-    ret = kendo.toString(ret,'dd/MMM/yyyy');
-    return ret;
-    //dtValidade==null?'':kendo.toString( kendo.parseDate(dtValidade), 'dd/MMM/yyyy')
+//JavaRest retorna TimeStamp (data+hora) como numero inteiro, @Temporal(TemporalType.TIMESTAMP)
+//ao criar novos registros, se passar o string como (data+hora), formato ISO date, o JavaRest também retorna a data como Int
+//a soluçao é criar uma função que faça o parser da data caso seja inteiro, os demais casos, o kendo.parseDate resolve automaticamente
+myapp['parseIntDate'] = function(date) {
+    return (date !== null)? new Date(date): date;
 };
 
 myapp.setTransport = function (tableName, idName) {
@@ -76,7 +74,7 @@ myapp.dsi.usuario = {
                 idUsuario: {type: "number", editable: false, defaultValue: null},
                 nomeUsuario: {type: "string"},
                 email: {type: "string"},
-                registroFuncional: {type: "number"},
+                registroFuncional: {type: "string"},
                 senha: {type: "string", defaultValue: "abc@123"},
                 theme: {type: "string", defaultValue: "bootstrap"}
             }
@@ -126,10 +124,10 @@ myapp.dsi.consumo = {
                 idConsumo: {type: "number", editable: false, defaultValue: null},
                 idProduto: {defaultValue: {idProdutoConsumo: 1, descricao: ''}},
                 idFabricante: {defaultValue: null},
-                //dtFabricacao: {type: "date", defaultValue: null},
-                dtValidade: {type: "date", defaultValue: null},
-                quantidadeEmEstoque: {type: "number"},
-                dtQuandoRecebeu: {type: "date", defaultValue: null},
+                dtFabricacao: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                dtValidade: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                quantidadeEmEstoque: {type: "number",validation: {required: true, min: 1}},
+                dtQuandoRecebeu: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
                 idQuemRecebeu: {defaultValue: {idUsuario: 1, usuario: ""}}
             }
         }
@@ -182,6 +180,20 @@ myapp.dropdown.theme = function (container, options) {
             dataTextField: "text",
             dataValueField: "value"
         });
+};
+
+myapp.dropDown = function (dataSourceList, textField, valueField) {
+    return {
+        editor: function (container, options) {
+            $('<input required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    dataSource: dataSourceList,
+                    dataTextField: textField,
+                    dataValueField: valueField
+                });
+        }
+    };
 };
 
 $.each(myapp.dsi, function (i, item) {

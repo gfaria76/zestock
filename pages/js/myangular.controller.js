@@ -23,7 +23,7 @@ myAngular.controller("userCtrl", function ($scope) {
             {field: "nomeUsuario", title: "Nome", width: "30%"},
             {field: "email", title: "e-mail"},
             {field: "senha", title: "Senha", width: "10%", template: "****"},
-            {field: "theme", title: "CSS", editor: myapp.dropdown.theme, width: "10%"},
+            {field: "theme", title: "CSS", editor: myapp.dropDown(myThemes.DropDownList.dataSource,"text","value").editor , width: "10%"},
             {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
         ]
     };
@@ -182,19 +182,21 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
                 myapp.ds.consumo.sync();
                 //myConsumo.fClear();
             },
-            fRequestEnd: function(e){
-                var i,newdate;
-                //console.log(JSON.stringify(e.type));
-                //console.log(JSON.stringify(e.sender));
-                //console.log(JSON.stringify(e.response));
-                if(e.type=='read') {
-                    for (i = 0; i < e.response.length; i++) {
-                        e.response[i].dtQuandoRecebeu = new Date(e.response[i].dtQuandoRecebeu);
-                    }
-                }else if(e.type=='create'){
-                    e.response.dtQuandoRecebeu = new Date(e.response.dtQuandoRecebeu);
-                }
-            },
+            // fRequestEnd: function(e){
+            //     var i,newdate;
+            //     // console.log(JSON.stringify(e.type));
+            //     // console.log(JSON.stringify(e.sender));
+            //     // console.log(JSON.stringify(e.response));
+            //     if(e.type=='read') {
+            //         // for (i = 0; i < e.response.length; i++) {
+            //         //     e.response[i].dtQuandoRecebeu = new Date(e.response[i].dtQuandoRecebeu);
+            //         // }
+            //     }else if(e.type=='create'){
+            //         console.log(JSON.stringify("requestEnd: "+ e.response));
+            //
+            //         // e.response.dtQuandoRecebeu = new Date(e.response.dtQuandoRecebeu);
+            //     }
+            // },
             onGridRowSelect: function (data, dataItem, columns) {
                 myConsumo.selected = dataItem;
                 myProduto.selected = dataItem.idProduto;
@@ -205,7 +207,7 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
         }
     ;
     $scope.consumo = myConsumo;
-    myapp.ds.consumo.bind('requestEnd', myConsumo.fRequestEnd);
+    // myapp.ds.consumo.bind('requestEnd', myConsumo.fRequestEnd);
 
     //GRID KENDO
     $scope.mainGridOptions = {
@@ -218,32 +220,27 @@ myAngular.controller("entradaestoqueCtrl", function ($scope) {
         reorderable: true,
         resizable: true,
         editable: "inline",
-        toolbar: ["create"],
+        //toolbar: ["create"],
         columns: [
-            {
-                field: "idConsumo", title: "ID", width: "10%"
-            },
+            {field: "idConsumo", title: "ID", width: "5%"},
             {
                 field: "idProduto", title: "Produto",
-                template: "#=idProduto.descricao#", width: "30%"
+                template: "#=idProduto.descricao#", width: "25%"
             },
             {
                 field: "idProduto", title: "Especificação",
-                template: "#=idProduto.especificacao#", width: "30%"
+                template: "#=idProduto.especificacao#", width: "25%"
             },
             {
-                field: "idProduto", title: "Unidade",
+                field: "idProduto", title: "Unidade", width: "10%",
                 template: "#=idProduto.idUnidade.unidade#"
             },
+            {field: "quantidadeEmEstoque", title: "Qtd.", width: "5%"},
             // {field: "idFabricante", title: "Fabricante"},
             // {field: "dtFabricacao", title: "Dt.Fabric.", format: "{0:dd/MMM/yyyy}"},
-            {field: "dtValidade", title: "Dt.Validade", width: "10%"},
-            {field: "dtQuandoRecebeu", width: "10%"},
-            {field: "quantidadeEmEstoque", title: "Qtd.", validation: {min: 0, required: true}},
-
-            //template: "#=idProduto.descricao idProduto.especificacao#"
-            //{field: "fabricante", title: "Fabricante", width: "40%"},
-            {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
+            {field: "dtValidade", title: "Dt.Validade", width: "10%", format: myapp.dateformat},
+            {field: "dtQuandoRecebeu", title: "Entrada", width: "15%", format: myapp.datetimeformat},
+            {command: [myapp.btDestroy], title: "", width: "8em"}
         ]
     };
 });
