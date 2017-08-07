@@ -1,21 +1,25 @@
 <div ng-controller="pedidosCtrl">
     <kendo-grid options="mainGridOptions">
         <div k-detail-template>
-            <kendo-tabstrip>
-                <ul>
-                    <li class="k-state-active">Status do Empréstimo</li>
-                    <li>Justificativa</li>
-                </ul>
-                <div>
+            <!--<div class="panel panel-default">-->
+            <!--<div class="panel-body">-->
+            <div class="row row-eq-height">
+                <div class="col-md-8">
                     <div kendo-grid k-options="detailGridOptions(dataItem)"></div>
                 </div>
-                {{dataItem}}
-                <div>
-                    <ul class="contact-info-form">
-                        <li><input class="k-textbox" ng-model="dataItem.justificativa"/></li>
-                    </ul>
+                <div class="panel col-md-2">
+                    <div class="form-group" style="height: 100%">
+                                <textarea class="form-control"
+                                          style="height: 100%; resize: none;
+                                          width: 100%; position: absolute;
+                                          top: 0; left: 0; right: 0; bottom: 0"
+                                          ng-disabled="true"
+                                          ng-model="dataItem.justificativa"></textarea>
+                    </div>
                 </div>
-            </kendo-tabstrip>
-        </div>
+            </div> <!--row row-eq-height-->
+            <!--</div> &lt;!&ndash;panel-body&ndash;&gt;-->
+            <!--</div> &lt;!&ndash;panel panel-default&ndash;&gt;-->
+        </div> <!--k-detail-template-->
     </kendo-grid>
 </div>

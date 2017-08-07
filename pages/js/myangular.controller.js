@@ -455,6 +455,22 @@ myAngular.controller("pedidosCtrl", function ($scope) {
     };
 });
 
+myAngular.controller("lotacoesCtrl", function ($scope) {
+    $scope.mainGridOptions = {
+        dataSource: myapp.ds.locaisLocacao,
+        //height: ,
+        filterable: true,
+        sortable: true,
+        pageable: true,
+        editable: "inline",
+        toolbar: ["create"],
+        columns: [
+            {field: "unidadeSetorial", title: "Uni. Setorial"},
+            {field: "setor", title: "Setor"},
+            {field: "sala", title: "Sala"}
+        ]
+    };
+});
 
 
 

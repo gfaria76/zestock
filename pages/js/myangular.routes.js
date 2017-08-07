@@ -51,6 +51,10 @@ function config($routeProvider, $locationProvider) {
             templateUrl: 'pages/pedidos.html',
             controller: 'pedidosCtrl'
         })
+        .when('/lotacoes', {
+            templateUrl: 'pages/lotacoes.html',
+            controller: 'lotacoesCtrl'
+        })
 
             // Caso não seja nenhum desses, 
             // redirecione para a rota '/'
