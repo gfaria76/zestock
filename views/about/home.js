@@ -7,7 +7,8 @@ myAngular
             '        <h1>Home Page</h1>\n' +
             '        <p>{{ message }}</p>\n' +
             '</div>',
-            controller: 'homeCtrl'
+            controller: 'homeCtrl',
+            requireLogin: false
         });
     }])
     .controller('homeCtrl', function($scope) {
