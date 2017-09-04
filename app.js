@@ -11,5 +11,5 @@ myAngular
             requireBase: false
             //rewriteLinks: false
         });
-        $routeProvider.otherwise({redirectTo: '/login'});
+        $routeProvider.otherwise({redirectTo: '/home'});
     }]);
