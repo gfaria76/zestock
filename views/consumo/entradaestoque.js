@@ -8,6 +8,7 @@ myAngular
         });
     }])
     .controller('entradaestoqueCtrl', function($scope) {
+
         var myUnidade = {
             ds: myapp.ds.unidade,
             selected: {idUnidade: null, unidade: null},
@@ -18,12 +19,39 @@ myAngular
         $scope.unidade = myUnidade;
 
         var myProduto = {
+            codBarrasOptions: {
+                dataSource: "produto.ds",
+                dataTextField: "codigoBarra",
+                dataValueField: "codigoBarra",
+                select: "produto.fSelect",
+                filter: "contains",
+                noDataTemplate: $("#noDataTemplate").html()
+            },
+            descricaoOptions: {
+                dataTextField:"descricao",
+                dataValueField:"idProdutoConsumo",
+                dataSource: "produto.ds",
+                autoBind:true,
+                autoWidth:true,
+                filter:"contains",
+                select:"produto.fSelect",
+                change:"produto.fChange",
+                template:'#: data.descricao# / #: data.especificacao#'
+            },
+            popupEditor: {
+                title:"Novo item",
+                width:1000, height:450,
+                modal:true,
+                visible:true
+                // content:{url:"/views/consumo/produtoform.html"}
+            },
             ds: myapp.ds.produto,
             selected: {
                 idProdutoConsumo: null, codigoBarra: null,
                 descricao: null, especificacao: null,
                 idUnidade: null
             },
+            noItem:true,
             fClear: function () {
                 myUnidade.fClear();
                 myProduto.selected = {
@@ -38,6 +66,7 @@ myAngular
                     myProduto.selected = e.dataItem;
                     myUnidade.selected = e.dataItem.idUnidade;
                     myConsumo.selected.dtQuandoRecebeu = new Date();
+                    myProduto.noItem=false;
                     //if (e.dataItem.nome !== null)
                     //    mycontact.setFilter(e.dataItem);
                 }
@@ -46,7 +75,11 @@ myAngular
                 //console.log(JSON.stringify(myConsumo.selected));
             },
             fChange: function () {
-            }
+            },
+            fAddProduto: function (widgetId, value) {
+                console.log(JSON.stringify(myProduto.selected))
+                // $scope.dialog.open()
+            },
         };
         $scope.produto = myProduto;
 

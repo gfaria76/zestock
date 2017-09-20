@@ -7,25 +7,18 @@
                 <div class="form-group col-sm-4 col-md-2">
                     <label>Cód.Barras</label>
                     <input kendo-combo-box
+                           id="products"
                            class="form-control"
-                           k-data-source="produto.ds"
-                           k-data-text-field="'codigoBarra'"
-                           k-data-value-field="'codigoBarra'"
-                           k-select="produto.fSelect"
-                           k-filter="'contains'"
+                           options="produto.codBarrasOptions"
                            ng-model="produto.selected.codigoBarra"/>
+                </div>
+                <div kendo-window="dialog" options="produto.popupEditor">
                 </div>
                 <div class="form-group col-sm-8 col-md-4">
                     <label>Descrição</label>
                     <input kendo-combo-box
                            class="form-control"
-                           k-auto-width="true"
-                           k-template="'#:descricao# / #:especificacao#'"
-                           k-data-source="produto.ds"
-                           k-data-value-field="'idProdutoConsumo'"
-                           k-data-text-field="'descricao'"
-                           k-select="produto.fSelect"
-                           k-filter="'contains'"
+                           options="produto.descricaoOptions"
                            ng-model="produto.selected.idProdutoConsumo"/>
                 </div>
                 <div class="form-group col-sm-8 col-md-4">
@@ -51,6 +44,7 @@
                            k-data-value-field="'idFabricante'"
                            k-filter="'contains'"
                            k-select="fabricante.fSelect"
+                           ng-disabled="produto.disabled"
                            ng-model="fabricante.selected.idFabricante"/>
                 </div>
                 <div class="form-group col-sm-4 col-md-2">
@@ -58,6 +52,7 @@
                     <input kendo-date-picker
                            k-format="'dd/MMM/yyyy'"
                            k-ng-model="consumo.selected.dtFabricacao"
+                           ng-disabled="produto.disabled"
                            class="form-control"/>
                 </div>
                 <div class="form-group col-sm-4 col-md-2">
@@ -65,12 +60,14 @@
                     <input kendo-date-picker
                            class="form-control"
                            k-format="'dd/MMM/yyyy'"
+                           ng-disabled="produto.disabled"
                            k-ng-model="consumo.selected.dtValidade"/>
                 </div>
                 <div class="form-group col-sm-4 col-md-2">
                     <label>Quantidade</label>
                     <input kendo-text-box
                            class="form-control"
+                           ng-disabled="produto.disabled"
                            ng-model="consumo.selected.quantidadeEmEstoque"/>
                 </div>
                 <div class="form-group col-sm-4 col-md-3">
@@ -94,3 +91,9 @@
     <!--<kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>-->
     <kendo-grid options="mainGridOptions"></kendo-grid>
 </div>
+<script id="noDataTemplate" type="text/x-kendo-template">
+    <div>
+        Item não encontrado - '#: instance.text() #'
+    </div>
+    <button class="k-button" ng-click="produto.fAddProduto('#: instance.element[0].id #', '#: instance.text() #')">Adicionar novo item</button>
+</script>
