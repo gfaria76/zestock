@@ -1,4 +1,4 @@
-'use strict';
+            'use strict';
 
 myAngular
     .config(['$routeProvider', function($routeProvider) {

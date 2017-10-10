@@ -104,6 +104,25 @@ myapp.dsi.fabricante = {
     }
 };
 
+myapp.dsi.historicoConsumo = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbhistoricoconsumo', 'idHistoricoConsumo'),
+    sort: {field:"idHistoricoConsumo", dir: "asc"},
+    schema: {
+        model: {
+            id: "idHistoricoConsumo",
+            fields: {
+                idHistoricoConsumo: {type: "number", editable: false, defaultValue: null},
+                idMaterialRetirado: {},
+                quantidadeRetirada: {type: "number"},
+                motivoRetirada: {type: "string"},
+                idQuemRetirou: {},
+                dtRetirada: {type: "date", parse: myapp.parseIntDate}
+            }
+        }
+    }
+};
+
 myapp.dsi.unidade = {
     pageSize: 10,
     transport: myapp.setTransport('jpa.tbunidade', 'idUnidade'),

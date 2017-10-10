@@ -17,6 +17,7 @@ myAngular
             editable: true, //incell edition
             toolbar: ["create", "save", "cancel"],
             columns: [
+                {field: "idProdutoConsumo", title: "ID",width: "5%"},
                 {field: "codigoBarra", title: "Cód.Barras", width: "10%"},
                 {field: "descricao", title: "Descrição"},
                 {field: "especificacao", title: "Especificação", width: "25%"},

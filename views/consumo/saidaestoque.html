@@ -1,0 +1,70 @@
+<div ng-controller="saidaestoqueCtrl">
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group col-sm-8 col-md-3">
+                <label>Descrição</label>
+                <input kendo-text-box
+                       class="form-control"
+                       ng-disabled="true"
+                       ng-model="saidaEstoque.selected.idProduto.descricao"
+                       ng-bind="saidaEstoque.selected.idProduto.descricao"/>
+            </div>
+            <div class="form-group col-sm-8 col-md-2">
+                <label>Especificação</label>
+                <input kendo-box
+                       class="form-control"
+                       ng-disabled="true"
+                       ng-model="saidaEstoque.selected.idProduto.especificacao"
+                       ng-bind="saidaEstoque.selected.idProduto.especificacao" />
+            </div>
+            <div class="form-group col-sm-4 col-md-2">
+                <label>Unidade</label>
+                <input kendo-text-box
+                       class="form-control"
+                       ng-disabled="true"
+                       option="uniOptions"
+                       ng-model="saidaEstoque.selected.idProduto.idUnidade.unidade"
+                       ng-bind="saidaEstoque.selected.idProduto.idUnidade.unidade" />
+            </div>
+            <div class="form-group col-sm-4 col-md-2">
+                <label>Justificatica</label>
+                <input kendo-text-box
+                       class="form-control"
+                       ng-model="saidaEstoque.historico.motivoRetirada" />
+            </div>
+            <div class="form-group col-sm-1 col-md-2">
+                <label>Qtd retirada</label>
+                <input kendo-text-box
+                       class="form-control"
+                       ng-model="saidaEstoque.historico.quantidadeRetirada" />
+            </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="código, descrição ou especificação"
+                    ng-model="filters.codDesc">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" ng-click="saidaEstoque.filters.fSearch()">
+                                <i class="k-icon k-i-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-3" style="text-align: right">
+                <kendo-button icon="'k-icon k-i-minus'" ng-click="saidaEstoque.fRetirar()">Retirar</kendo-button>
+                <kendo-button ng-click="saidaEstoque.filters.fAll(); visi=true;" ng-show=!visi>Mostrar Todos</kendo-button>
+                <kendo-button ng-click="saidaEstoque.filters.fStock(); visi=false;" ng-show=visi>Apenas em Estoque</kendo-button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <kendo-grid options="saidaEstoque.mainGridOptions"></kendo-grid>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

@@ -1,82 +1,70 @@
-<div ng-controller="consumoCtrl">
-    </br>
-    <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">Produto</div>
-            <div class="panel-body">
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Cód.Barras</label>
-                    <input kendo-combo-box class="form-control"
-                           k-data-text-field="'codigoBarra'"
-                           k-data-value-field="'codigoBarra'"
-                           k-select="produto.fSelect"
-                           k-data-source="produto.ds"
-                           ng-model="produto.selected.codigoBarra"
-                    />
-                </div>
-                <div class="form-group col-sm-8 col-md-4">
-                    <label>Descrição</label>
-                    <select kendo-combo-box
-                            class="form-control"
-                            k-data-text-field="'descricao'"
-                            k-data-value-field="'idProdutoConsumo'"
-                            k-data-source="produto.ds"
-                            k-auto-bind="true"
-                            k-auto-width="true"
-                            k-filter="'contains'"
-                            k-select="produto.fSelect"
-                            k-change="produto.fChange"
-                            k-template="'#: data.descricao# / #: data.especificacao#'"
-                            ng-model="produto.selected.idProdutoConsumo"
-                    />
-                </div>
-                <div class="form-group col-sm-8 col-md-4">
-                    <label>Especificação</label>
-                    <input kendo-text-box
-                           class="form-control"
-                           ng-disabled="true"
-                           ng-model="produto.selected.especificacao"/>
-                </div>
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Unidade</label>
-                    <select kendo-combo-box
-                            class="form-control"
-                            k-data-text-field="'unidade'"
-                            k-data-value-field="'idUnidade'"
-                            k-data-source="unidade.ds"
-                            k-auto-bind="true"
-                            ng-disabled="true"
-                            ng-model="unidade.selected.idUnidade"
-                    />
-                </div>
-                <div class="form-group col-sm-4 col-md-3">
-                    <label>Fabricante</label>
-                    <input kendo-combo-box class="form-control"
-                           k-data-source="fabricante.ds"
-                           k-data-text-field="'fabricante'"
-                           k-data-value-field="'idFabricante'"
-                           k-auto-bind="true"
-                           ng-model="fabricante.selected.idFabricante"/>
-                </div>
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Fabricação</label>
-                    <input kendo-date-picker class="form-control"
-                           k-format="'dd/MMM/yyyy'"
-                           k-ng-model="consumo.selected.dtFabricacao"/>
-                </div>
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Validade</label>
-                    <input kendo-date-picker class="form-control"
-                           k-format="'dd/MMM/yyyy'"
-                           k-ng-model="consumo.selected.dtValidade"/>
-                </div>
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Quantidade</label>
-                    <input kendo-text-box class="form-control" ng-model="consumo.selected.quantidadeEmEstoque"/>
-                </div>
-            </div>  <!--panel body-->
-        </div>  <!--panel-->
-    </div>  <!--container-->
+<!--<div ng-controller="consumoCtrl">-->
+    <!--</br>-->
+    <!--<div class="container-fluid">-->
+        <!--<div class="panel panel-default">-->
+            <!--<div class="panel-heading">Produto</div>-->
+            <!--<div class="panel-body">-->
+                <!--<div class="form-group col-sm-4 col-md-2">-->
+                    <!--<label>Cód.Barras</label>-->
+                    <!--<input kendo-combo-box class="form-control"-->
+                           <!--options="produto.codBarrasOptions"-->
+                           <!--ng-model="produto.selected.codigoBarra"-->
+                    <!--/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-8 col-md-4">-->
+                    <!--<label>Descrição</label>-->
+                    <!--<select kendo-combo-box-->
+                            <!--class="form-control"-->
+                            <!--ng-model="produto.selected.idProdutoConsumo"-->
+                    <!--/>'2-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-8 col-md-4">-->
+                    <!--<label>Especificação</label>-->
+                    <!--<input kendo-text-box-->
+                           <!--class="form-control"-->
+                           <!--ng-disabled="true"-->
+                           <!--ng-model="produto.selected.especificacao"/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-4 col-md-2">-->
+                    <!--<label>Unidade</label>-->
+                    <!--<select kendo-combo-box-->
+                            <!--class="form-control"-->
+                            <!--k-data-text-field="'unidade'"-->
+                            <!--k-data-value-field="'idUnidade'"-->
+                            <!--k-data-source="unidade.ds"-->
+                            <!--k-auto-bind="true"-->
+                            <!--ng-disabled="true"-->
+                            <!--ng-model="unidade.selected.idUnidade"-->
+                    <!--/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-4 col-md-3">-->
+                    <!--<label>Fabricante</label>-->
+                    <!--<input kendo-combo-box class="form-control"-->
+                           <!--k-data-source="fabricante.ds"-->
+                           <!--k-data-text-field="'fabricante'"-->
+                           <!--k-data-value-field="'idFabricante'"-->
+                           <!--k-auto-bind="true"-->
+                           <!--ng-model="fabricante.selected.idFabricante"/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-4 col-md-2">-->
+                    <!--<label>Fabricação</label>-->
+                    <!--<input kendo-date-picker class="form-control"-->
+                           <!--k-format="'dd/MMM/yyyy'"-->
+                           <!--k-ng-model="consumo.selected.dtFabricacao"/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-4 col-md-2">-->
+                    <!--<label>Validade</label>-->
+                    <!--<input kendo-date-picker class="form-control"-->
+                           <!--k-format="'dd/MMM/yyyy'"-->
+                           <!--k-ng-model="consumo.selected.dtValidade"/>-->
+                <!--</div>-->
+                <!--<div class="form-group col-sm-4 col-md-2">-->
+                    <!--<label>Quantidade</label>-->
+                    <!--<input kendo-text-box class="form-control" ng-model="consumo.selected.quantidadeEmEstoque"/>-->
+                <!--</div>-->
+            <!--</div>  &lt;!&ndash;panel body&ndash;&gt;-->
+        <!--</div>  &lt;!&ndash;panel&ndash;&gt;-->
+    <!--</div>  &lt;!&ndash;container&ndash;&gt;-->
 
-    <kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>
-</div>
+    <!--<kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>-->
+<!--</div>-->
