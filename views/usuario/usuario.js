@@ -33,7 +33,7 @@ myAngular
                 {
                     field: "theme",
                     title: "CSS",
-                    editor: myapp.dropDown(myThemes.DropDownList.dataSource, "text", "value").editor,
+                    editor: myapp.dropDown("", "text", "value").editor,
                     width: "10%"
                 },
                 {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}

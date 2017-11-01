@@ -1,0 +1,49 @@
+<div ng-controller="controleestoqueCtrl" id="myestoquecontroler">
+
+    <section class="well">
+        <h3 class="ra-well-title">Controle de Estoque</h3>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Localizar Produto</label>
+                <span class="k-textbox k-button k-space-right">
+                    <input class="form-control" ng-change="ctrl.fChange()"
+                           ng-model="ctrl.nomebusca"/>
+                    <a class="k-icon k-i-search"></a>
+                    </span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Produto Selecionado: </label>
+                <small>
+                    <a href="#!produto">[Criar Novo Produto]</a>
+                </small>
+                <br>
+                <span ng-if="ctrl.produto.idProdutoConsumo!=null">{{ctrl.produto.codigoBarra}}, {{ctrl.produto.descricao}}, {{ctrl.produto.especificacao}}</span>
+                <span ng-if="ctrl.produto.idProdutoConsumo==null">Nenhum produto selecionado!</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button kendo-button ng-disabled="ctrl.produto.idProdutoConsumo==null"
+                        style="width: 25%" icon="'k-icon k-i-redo'"
+                        ng-click="ctrl.fNovaEntrada(); wEntrada.center().open()">Entrada
+                </button>
+                <div kendo-window="wEntrada" options="wEntradaOptions">Window Add no Estoque</div>
+
+                <button kendo-button ng-disabled="ctrl.consumo.idConsumo==null"
+                        style="width: 25%" icon="'k-icon k-i-undo'"
+                        ng-click="wSaida.center().open()">Saída
+                </button>
+                <div kendo-window="wSaida" options="wSaidaOptions">Window Retira do Estoque</div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <kendo-grid options="mainGridOptions"></kendo-grid>
+            </div>
+        </div>
+    </section>
+</div>
+

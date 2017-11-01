@@ -1,0 +1,76 @@
+<section class="well">
+    <form class="form-horizontal">
+        <div class="form-group col-sm-12 col-md-2">
+            <label for="codbarras">Cód.Barras</label>
+            <input id="codbarras" class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.idProduto.codigoBarra"/>
+        </div>
+        <div class="form-group col-sm-12 col-md-10">
+            <label>Descrição</label>
+            <input class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.idProduto.descricao"/>
+        </div>
+        <div class="form-group col-sm-12 col-md-10">
+            <label>Especificação</label>
+            <input class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.idProduto.especificacao"/>
+        </div>
+        <div class="form-group  col-sm-12 col-md-2">
+            <label>Unidade</label>
+            <input class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.idProduto.idUnidade.unidade"/>
+        </div>
+        <div class="form-group col-sm-12 col-md-6">
+            <label>Fabricante</label>
+            <input class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.idFabricante.fabricante"/>
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+            <label>Dt.Fabricação</label>
+            <input kendo-date-picker disabled="true"
+                   k-ng-model="ctrl.consumo.dtFabricacao"/>
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+            <label>Dt.Validade</label>
+            <input kendo-date-picker disabled="true"
+                   k-ng-model="ctrl.consumo.dtValidade"/>
+        </div>
+        <div class="clearfix"></div>
+    </form>
+</section>
+<section class="well">
+    <form class="form-horizontal">
+        <div class="form-group  col-sm-12 col-md-2">
+            <label>Em Estoque</label>
+            <input class="k-textbox k-state-disabled" disabled="true"
+                   ng-model="ctrl.consumo.quantidadeEmEstoque"/>
+        </div>
+        <div class="form-group  col-sm-12 col-md-2">
+            <label>Retirar</label>
+            <input kendo-numeric-text-box k-min="1"
+                   ng-model="ctrl.qtdConsumida"/>
+        </div>
+        <div class="form-group  col-sm-12 col-md-8">
+            <label>Observações</label>
+            <input class="form-control k-textbox"
+                   placeholder="Ex.: Lab. 7"
+                   ng-model="ctrl.obs"/>
+        </div>
+        <div class="clearfix"></div>
+    </form>
+</section>
+
+<div class="row">
+    <div class="col-md-12">
+        <button kendo-button
+                style="width: 25%" icon="'k-icon k-i-check'"
+                ng-disabled="ctrl.qtdConsumida<=0 || ctrl.qtdConsumida > ctrl.consumo.quantidadeEmEstoque"
+                ng-click="ctrl.fUpdateConsumo(); wSaida.close()">OK
+        </button>
+
+        <button kendo-button
+                style="width: 25%" icon="'k-icon k-i-cancel'"
+                ng-click="wSaida.close()">Cancelar
+        </button>
+    </div>
+</div>

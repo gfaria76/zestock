@@ -1,99 +1,176 @@
 <!DOCTYPE html>
 <html ng-app="EstoqueX">
-    <head>
-        <title>Controle de Estoque/Almoxarifado</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width  =device-width, initial-scale=1.0">
-        <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-        <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
-        <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+<head>
+    <title>Controle de Estoque/Almoxarifado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="modules/jquery/dist/jquery.min.js"></script>
+    <script src="modules/angular/angular.min.js"></script>
+    <script src="modules/angular-messages/angular-messages.min.js"></script>
+    <script src="modules/ngstorage/ngStorage.min.js"></script>
+    <script src="modules/angular-route/angular-route.min.js"></script>
 
-        <script src="kendo/js/kendo.all.min.js" type="text/javascript"></script>
-        <script src="kendo/js/cultures/kendo.culture.pt-BR.min.js" type="text/javascript"></script>
-        <script src="kendo/js/messages/kendo.messages.pt-BR.min.js" type="text/javascript"></script>
+    <script src="kendo/js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="kendo/js/cultures/kendo.culture.pt-BR.min.js" type="text/javascript"></script>
+    <script src="kendo/js/messages/kendo.messages.pt-BR.min.js" type="text/javascript"></script>
 
-        <link href="styles/kendo.common-bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-        <link href="app.css" rel="stylesheet" type="text/css"/>
+    <!--<link rel="stylesheet" href="vendor/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="modules/components-font-awesome/css/font-awesome.min.css">
+    <!--kendo CSS-->
+    <link rel="stylesheet" href="styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.flat.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.dataviz.min.css"/>
+    <link rel="stylesheet" href="styles/kendo.dataviz.bootstrap.min.css"/>
 
-        <script src="themes.js" type="text/javascript"></script>
-
-        <base href="/">
-        <script src="app.js"></script>
-        <script src="ds.model/myapp.ds.js" type="text/javascript"></script>
-        <script src="views/login/login.js"></script>
-        <script src="views/about/home.js"></script>
-        <script src="views/usuario/usuario.js"></script>
-        <script src="views/consumo/produto.js"></script>
-        <script src="views/consumo/unidademedida.js"></script>
-        <script src="views/consumo/entradaestoque.js"></script>
-        <script src="views/fabricante/fabricante.js"></script>
-        <script src="views/permanente/bempermanente.js"></script>
-        <script src="views/permanente/emprestimo.js"></script>
-        <script src="views/permanente/lotacoes.js"></script>
-        <script src="views/permanente/pedidos.js"></script>
-        <script src="views/login/login.service.js"></script>
+    <link href="app.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="styles.css" rel="stylesheet" type="text/css">-->
 
 
-    </head>
-    <body>
-        <style>
-            /*coloca a selecao de temas no final da linha do menu*/
-            #menu > .k-last {
-                float: right;
-                border-left-width: 1px;
-                border-right-width: 0;
-            }
-        </style>
-        <span kendo-notification id="notification"></span>
-        <div>
-            <ul id="menu">
-                <li><a href="#!about">Home</a></li>
-                <li><a href="#!usuario">Usuário</a></li>
-                <li>Consumo
-                    <ul>
-                        <li><a href="#!entradaestoque">Entrada em Estoque</a></li>
-                        <li><a href="#!saidaestoque">Saída do Estoque</a></li>
-                        <li><a href="#!histconsumo">Histórico E/S</a></li>
-                        <li><a href="#!produto">Lista de Produtos</a></li>
-                        <li><a href="#!fabricante">Fabricantes</a></li>
-                        <li><a href="#!unidademedida">Unidade/Medida</a></li>
-                    </ul>
-                </li>
-                <li>Permanente
-                    <ul>
-                        <li><a href="#!bempermanente">Lista de Bens</a></li>
-                        <li><a href="#!emprestimo">Empréstimos</a></li>
-                        <li><a href="#!lotacoes">Lotações</a></li>
-                        <li><a href="#!pedidos">Lista de Pedidos</a></li>
-                    </ul>
-                </li>
-                <li id="themes">TESTE</li>
-            </ul>
+    <base href="/">
+    <script src="app.js"></script>
+    <script src="ds.model/myapp.ds.js"></script>
+    <script src="views/login/login.service.js"></script>
+    <script src="views/login/login.controller.js"></script>
+    <script src="views/about/home.js"></script>
+    <script src="views/usuario/usuario.js"></script>
+    <script src="views/consumo/produto.js"></script>
+    <script src="views/consumo/unidademedida.js"></script>
+    <script src="views/consumo/controleestoque.js"></script>
+    <script src="views/fabricante/fabricante.js"></script>
+    <script src="views/permanente/bempermanente.js"></script>
+    <script src="views/permanente/emprestimo.js"></script>
+    <script src="views/permanente/lotacoes.js"></script>
+    <script src="views/permanente/pedidos.js"></script>
+    <script src="theme-chooser.js"></script>
+</head>
+<body>
+<header>
+    <div class="container" class="row">
+        <h1 class="col-sm-3 hidden-sm">Kendo UI &hearts; Bootstrap</h1>
+        <h1 class="col-sm-3 visible-sm">Kendo UI &hearts;<br/> Bootstrap</h1>
 
+        <button id="configure" class="visible-xs"><span class="k-icon k-i-align-justify"></span></button>
+
+        <div id="configurator-wrap" class="col-sm-9 hidden-xs">
+            <div id="configurator" class="row">
+                <label class="col-sm-4">
+                    <div class="description">Dimensions</div>
+                    <select id="dimensions"></select>
+                </label>
+
+                <label class="col-sm-4">
+                    <div class="description">Theme</div>
+                    <select id="theme"></select>
+                </label>
+
+                <label class="col-sm-4">
+                    <div class="description">Font-size</div>
+                    <select id="font-size"></select>
+                </label>
+            </div>
         </div>
+    </div>
+</header>
 
-        <div ng-view></div>
+<!--não mudar o nome example, pois é obrigatório para no theme-choser-->
+<div id="example" class="container">
+    <ul id="menu">
+        <li><a href="#!login">Home</a></li>
+        <li><a href="#!usuario">Usuário</a></li>
+        <li>Consumo
+            <ul>
+                <li><a href="#!controleestoque">Controle de Estoque</a></li>
+                <li><a href="#!histconsumo">Histórico E/S</a></li>
+                <li><a href="#!produto">Lista de Produtos</a></li>
+                <li><a href="#!fabricante">Fabricantes</a></li>
+                <li><a href="#!unidademedida">Unidade/Medida</a></li>
+            </ul>
+        </li>
+        <li>Permanente
+            <ul>
+                <li><a href="#!bempermanente">Lista de Bens</a></li>
+                <li><a href="#!emprestimo">Empréstimos</a></li>
+                <li><a href="#!lotacoes">Lotações</a></li>
+                <li><a href="#!pedidos">Lista de Pedidos</a></li>
+            </ul>
+        </li>
+        <!--<li id="themes">TESTE</li>-->
+    </ul>
+    <div id="notification"></div>
+    <div ng-view></div>
+</div>
 
-        <script>
-            //deve inicializar após DOM como abaixoc
-            kendo.culture("pt-BR");
-            $(document).ready(function () {
-                $("#menu").kendoMenu();
-                $("#themes").kendoDropDownList(myThemes.DropDownList);
-                myapp.notification = $('#notification')
-                    .kendoNotification({
-                        position: { top: 20, right: 20},
-                        stacking: "down",
-                        width: 300
-                    })
-                    .data("kendoNotification");
-            });
 
-        </script>
-    </body>
+</body>
+<script>
+    $("#dimensions").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        value: "common",
+        dataSource: [
+            {text: "Default", value: "common"},
+            {text: "Bootstrap", value: "common-bootstrap"}
+        ],
+        change: function (e) {
+            window.kendoThemeChooser.changeCommon(this.value(), true);
+        }
+    });
+
+    $("#theme").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        value: "flat",
+        dataSource: [
+            {text: "Default", value: "default"},
+            {text: "Blue Opal", value: "blueopal"},
+            {text: "Bootstrap", value: "bootstrap"},
+            {text: "Silver", value: "silver"},
+            {text: "Uniform", value: "uniform"},
+            {text: "Metro", value: "metro"},
+            {text: "Black", value: "black"},
+            {text: "Metro Black", value: "metroblack"},
+            {text: "High Contrast", value: "highcontrast"},
+            {text: "Moonlight", value: "moonlight"},
+            {text: "Flat", value: "flat"}
+        ],
+        change: function (e) {
+            theme = this.value();
+            window.kendoThemeChooser.changeTheme(theme, true);
+            //initCharts(theme);
+        }
+    }).change();
+
+    function changeFontSize(e) {
+        var value = $("#font-size").kendoDropDownList("value");
+        $("body").css("font-size", value + "px");
+    }
+
+    $("#font-size").kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        value: 14,
+        height: 204,
+        dataSource: [
+            {text: "10px", value: 10},
+            {text: "12px", value: 12},
+            {text: "14px", value: 14},
+            {text: "16px", value: 16},
+            {text: "18px", value: 18},
+            {text: "20px", value: 20}
+        ],
+        change: changeFontSize
+    });
+
+    $("#theme-list, #dimensions-list, #font-size-list").addClass("ra-list");
+
+    $("#configure").on("click", function (e) {
+        $("#configurator-wrap").toggleClass("hidden-xs");
+        e.preventDefault();
+    });
+
+
+</script>
 
 </html>
 

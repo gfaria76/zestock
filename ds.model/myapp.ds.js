@@ -1,8 +1,10 @@
 var myapp = {
     ds: {},
     dsi: {},
+    model: {},
     dropdown: {},
-    appUrl: "http://localhost:8080/EstoqueREST/webresources/",
+    appUrl: "http://172.23.64.51:8080/EstoqueREST/webresources/",
+    //appUrl: "http://localhost:8080/EstoqueREST/webresources/",
     user: {
         idUsuario: 1,
         nomeUsuario: "Gedson Faria",
@@ -12,6 +14,8 @@ var myapp = {
         theme: null
     },
     notification: null,
+    dtpickerformat: "dd/MMM/yyyy",
+    dtimepickerformat: "dd/MMM/yyyy HH:mm",
     dateformat: "{0:dd/MMM/yyyy}",
     datetimeformat: "{0:dd/MMM/yyyy HH:mm}"
 };
@@ -69,6 +73,12 @@ myapp.setTransport = function (tableName, idName) {
         }
     };
 };
+// myapp.getDefaultValues = function (model_name){
+//     var Obj = kendo.data.Model.define(myapp.dsi[model_name].schema.model)
+//     var obj = new Obj()
+//     var ret = obj.toJSON()
+//     return ret
+// };
 
 myapp.dsi.usuario = {
     pageSize: 10,
@@ -104,6 +114,25 @@ myapp.dsi.fabricante = {
     }
 };
 
+myapp.dsi.historicoConsumo = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbhistoricoconsumo', 'idHistoricoConsumo'),
+    //sort: {field:"idHistoricoConsumo", dir: "asc"},
+    schema: {
+        model: {
+            id: "idHistoricoConsumo",
+            fields: {
+                idHistoricoConsumo: {type: "number", editable: false, defaultValue: null},
+                idMaterialRetirado: {defaultValue: null},
+                quantidadeRetirada: {type: "number"},
+                motivoRetirada: {type: "string"},
+                idQuemRetirou: {defaultValue: null},
+                dtRetirada: {type: "date", parse: myapp.parseIntDate}
+            }
+        }
+    }
+};
+
 myapp.dsi.unidade = {
     pageSize: 10,
     transport: myapp.setTransport('jpa.tbunidade', 'idUnidade'),
@@ -113,29 +142,7 @@ myapp.dsi.unidade = {
             id: 'idUnidade',
             fields: {
                 idUnidade: {type: "number", editable: false, defaultValue: null},
-                unidade: {type: "string", defaultValue: "1"}
-            }
-        }
-    }
-};
-
-myapp.dsi.consumo = {
-    pageSize: 10,
-    transport: myapp.setTransport('jpa.tbconsumo', 'idConsumo'),
-    //sort: {field: "idConsumo", dir: "asc"},
-    //filter: { field: "quantidadeEmEstoque", operator: "gt", value: 0 },
-    schema: {
-        model: {
-            id: 'idConsumo',
-            fields: {
-                idConsumo: {type: "number", editable: false, defaultValue: null},
-                idProduto: {defaultValue: {idProdutoConsumo: 1, descricao: ''}},
-                idFabricante: {defaultValue: null},
-                dtFabricacao: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
-                dtValidade: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
-                quantidadeEmEstoque: {type: "number", validation: {required: true, min: 1}},
-                dtQuandoRecebeu: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
-                idQuemRecebeu: {defaultValue: {idUsuario: 1, usuario: ""}}
+                unidade: {type: "string", defaultValue: "NULL"}
             }
         }
     }
@@ -153,7 +160,33 @@ myapp.dsi.produto = {
                 codigoBarra: {type: "string", defaultValue: ' '},
                 descricao: {type: "string"},
                 especificacao: {type: "string"},
-                idUnidade: {defaultValue: {idUnidade: 1, unidade: ""}}
+                idUnidade: {defaultValue: null}
+            }
+        }
+    }
+};
+
+myapp.dsi.consumo = {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbconsumo', 'idConsumo'),
+    //sort: {field: "idConsumo", dir: "asc"},
+    //filter: { field: "quantidadeEmEstoque", operator: "gt", value: 0 },
+    schema: {
+        model: {
+            id: 'idConsumo',
+            fields: {
+                idConsumo: {type: "number", editable: false, defaultValue: null},
+                idProduto: {defaultValue: null},
+                prodCBar: {type: "string", from: "idProduto.codigoBarra"},
+                prodDesc: {from: "idProduto.descricao"},
+                prodEspe: {from: "idProduto.especificacao"},
+                prodUnid: {from: "idProduto.idUnidade.unidade"},
+                idFabricante: {defaultValue: null},
+                dtFabricacao: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                dtValidade: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                quantidadeEmEstoque: {type: "number", validation: {required: true, min: 1}},
+                dtQuandoRecebeu: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                idQuemRecebeu: {defaultValue: null}
             }
         }
     }
@@ -296,10 +329,10 @@ myapp.dropDown = function (dataSourceList, textField, valueField) {
 $.each(myapp.dsi, function (i, item) {
     //e tem sender, action, field, itens
     //actions itemChanged, sync, add, remove - read dont has action
-    item['change'] = function (e) {
-        if (('action' in e)) {
-            myapp.notification.show(i + ':' + JSON.stringify(e.action), 'info');
-        }
+    item['requestEnd'] = function (e) {
+        if (e.type != 'read')
+            myapp.notification.show(i + ':' + JSON.stringify(e.type), 'info');
+
     };
     //e.errorThrown, e.sender, e.status, e.xhr
     item['error'] = function (e) {
@@ -307,4 +340,5 @@ $.each(myapp.dsi, function (i, item) {
             + JSON.stringify(e.xhr.state), 'error');
     };
     myapp.ds[i] = new kendo.data.DataSource(item);
+    myapp.model[i] = new kendo.data.Model.define(item.schema.model);
 });

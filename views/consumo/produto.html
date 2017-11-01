@@ -1,3 +1,28 @@
 <div ng-controller="produtoCtrl">
-    <kendo-grid options="mainGridOptions"></kendo-grid>
+    <section class="well">
+        <h3 class="ra-well-title">Lista Geral de Produtos</h3>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Localizar Produto</label>
+                <span class="k-textbox k-button k-space-right">
+                    <input class="form-control" ng-change="ctrl.fChange()"
+                           placeholder="Código, Descrição ou Especificação"
+                           ng-model="ctrl.nomebusca"/>
+                    <a class="k-icon k-i-search"></a>
+                    </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Produto Selecionado: </label>
+                <small>
+                    <a href="#!controleestoque">[Ir: Controle de Estoque]</a>
+                </small>
+                <br>
+                <span ng-if="ctrl.produto.idProdutoConsumo!=null">{{ctrl.produto.codigoBarra}}, {{ctrl.produto.descricao}}, {{ctrl.produto.especificacao}}</span>
+                <span ng-if="ctrl.produto.idProdutoConsumo==null">Nenhum produto selecionado!</span>
+            </div>
+            <div class="form-group col-md-12">
+                <kendo-grid options="mainGridOptions"></kendo-grid>
+            </div>
+        </div>
+    </section>
 </div>
