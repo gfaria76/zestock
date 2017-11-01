@@ -71,6 +71,27 @@ myAngular
         };
         $scope.locaisLocacao = myLocaisLocacao;
 
+        var myFasesEmprestimoBemPermanente ={
+            ds: myapp.ds.fasesEmprestimoBemPermanente,
+            selected: {
+                idFasesEmprestimo: null,
+                idPedidoEmprestimo:null,
+                dtStatus: null,
+                idStatus: null,
+                idResponsavel: null
+            }
+        };
+        $scope.fasesEmprestimoBemPermanente = myFasesEmprestimoBemPermanente;
+
+        var myStatusEmprestimoBemPermanente = {
+            ds: myapp.ds.statusEmprestimoBemPermanente,
+            selected: {
+                idStatus: null,
+                descricao: null
+            }
+        };
+        $scope.statusEmprestimoBemPermanente = myStatusEmprestimoBemPermanente;
+
         var myEmprestimoBemPermanente = {
             ds: myapp.ds.emprestimoBemPermanente,
             selected: {
@@ -79,7 +100,8 @@ myAngular
                 dtPrevistaRetirada: null,
                 dtPrevistaDevolucao: null,
                 idSolicitante: null,
-                idNumPatrimonio: null
+                idNumPatrimonio: null,
+                idStatusEmprestimo:null
             },
             fClear: function () {
                 myBemPermanente.fClear();
@@ -89,7 +111,8 @@ myAngular
                     dtPrevistaRetirada: null,
                     dtPrevistaDevolucao: null,
                     idSolicitante: null,
-                    idNumPatrimonio: null
+                    idNumPatrimonio: null,
+                    idStatusEmprestimo: null
                 };
             },
             fSalvar: function () {
@@ -100,10 +123,15 @@ myAngular
                 myapp.ds.emprestimoBemPermanente.add(myEmprestimoBemPermanente.selected);
                 myapp.ds.emprestimoBemPermanente.sync();
                 //myConsumo.fClear();
+            },
+            fCreateStatus: function () {
+                if (myEmprestimoBemPermanente.selected.idPedidoEmprestimo != null) {
+                    myEmprestimoBemPermanente.selected.idPedidoEmprestimo = myEmprestimoBemPermanente.selected;
+                }
+
             }
         };
         $scope.emprestimoBemPermanente = myEmprestimoBemPermanente;
-
         //GRID KENDO
         // $scope.mainGridOptions = {
         //     dataSource: myapp.ds.emprestimoBemPermanente,
