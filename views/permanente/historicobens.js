@@ -22,8 +22,8 @@ myAngular
             columns: [
                 {field: "idFasesEmprestimo", title: "ID", width: "5%"},
                 {
-                 field: "idPedidoEmprestimo", title: "Num. Património",
-                 template: "#=idPedidoEmprestimo.idNumPatrimonio.numPatrimonio#", width: "10%"
+                    field: "idPedidoEmprestimo", title: "Num. Património",
+                    template: "#=idPedidoEmprestimo.idNumPatrimonio.numPatrimonio#", width: "10%"
                 },
                 {
                     field: "idPedidoEmprestimo", title: "material",

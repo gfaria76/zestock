@@ -1,42 +1,42 @@
-    <div class="container-fluid">
-        <!--<div class="panel panel-default">-->
-            <!--<div class="panel-heading"></div>-->
-            <div class="panel-body">
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Cód.Barras</label>
-                    <input kendo-text-box
-                           id="products"
-                           class="form-control"
-                           options="produto.codBarrasOptions"
-                           ng-model="produto.selected.codigoBarra"/>
-                </div>
-                <div class="form-group col-sm-8 col-md-4">
-                    <label>Descrição</label>
-                    <input kendo-text-box
-                           class="form-control"
-                           options="produto.descricaoOptions"
-                           ng-model="produto.selected.descricao"/>
-                </div>
-                <div class="form-group col-sm-8 col-md-4">
-                    <label>Especificação</label>
-                    <input kendo-text-box
-                           class="form-control"
-                           ng-model="produto.selected.especificacao"/>
-                </div>
-                <div class="form-group col-sm-4 col-md-2">
-                    <label>Unidade</label>
-                    <input kendo-combo-box
-                           class="form-control"
-                           options="unidade.unidadeOptions"
-                           ng-model="unidade.selected.idUnidade"/>
-                </div>
-            </div>
-            <div>
-                <kendo-button icon="'k-icon k-i-plus'" class="k-primary" ng-click="produto.fSalvar(); dialog.close()">Salvar
-                </kendo-button>
-                <kendo-button icon="'k-icon k-i-cancel'" ng-click="consumo.fClear()">Limpar</kendo-button>
-            </div>
-        {{produto.selected}}
-        {{unidade.selected}}
-        <!--</div>-->
+<div class="container-fluid">
+    <!--<div class="panel panel-default">-->
+    <!--<div class="panel-heading"></div>-->
+    <div class="panel-body">
+        <div class="form-group col-sm-4 col-md-2">
+            <label>Cód.Barras</label>
+            <input kendo-text-box
+                   id="products"
+                   class="form-control"
+                   options="produto.codBarrasOptions"
+                   ng-model="produto.selected.codigoBarra"/>
+        </div>
+        <div class="form-group col-sm-8 col-md-4">
+            <label>Descrição</label>
+            <input kendo-text-box
+                   class="form-control"
+                   options="produto.descricaoOptions"
+                   ng-model="produto.selected.descricao"/>
+        </div>
+        <div class="form-group col-sm-8 col-md-4">
+            <label>Especificação</label>
+            <input kendo-text-box
+                   class="form-control"
+                   ng-model="produto.selected.especificacao"/>
+        </div>
+        <div class="form-group col-sm-4 col-md-2">
+            <label>Unidade</label>
+            <input kendo-combo-box
+                   class="form-control"
+                   options="unidade.unidadeOptions"
+                   ng-model="unidade.selected.idUnidade"/>
+        </div>
     </div>
+    <div>
+        <kendo-button icon="'k-icon k-i-plus'" class="k-primary" ng-click="produto.fSalvar(); dialog.close()">Salvar
+        </kendo-button>
+        <kendo-button icon="'k-icon k-i-cancel'" ng-click="consumo.fClear()">Limpar</kendo-button>
+    </div>
+    {{produto.selected}}
+    {{unidade.selected}}
+    <!--</div>-->
+</div>

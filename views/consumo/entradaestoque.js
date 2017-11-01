@@ -1,18 +1,18 @@
 'use strict';
 
 myAngular
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/entradaestoque', {
             templateUrl: 'views/consumo/entradaestoque.html',
             controller: 'entradaestoqueCtrl'
         });
     }])
-    .controller('entradaestoqueCtrl', function($scope) {
+    .controller('entradaestoqueCtrl', function ($scope) {
 
         var myUnidade = {
             ds: myapp.ds.unidade,
             selected: {idUnidade: null, unidade: null},
-            unidadeOptions:{
+            unidadeOptions: {
                 dataSource: myapp.ds.unidade,
                 dataTextField: "unidade",
                 dataValueField: "idUnidade"
@@ -21,7 +21,7 @@ myAngular
                 myUnidade.selected = {idUnidade: null, unidade: null};
             },
             fSelect: function (e) {
-                if(e != null){
+                if (e != null) {
                     myUnidade.selected.unidade = e.item.text();
                 }
             }
@@ -40,24 +40,25 @@ myAngular
                 noDataTemplate: $("#noDataTemplate").html()
             },
             descricaoOptions: {
-                dataTextField:"descricao",
-                dataValueField:"idProdutoConsumo",
+                dataTextField: "descricao",
+                dataValueField: "idProdutoConsumo",
                 dataSource: myapp.ds.produto,
-                autoBind:false,
-                autoWidth:true,
-                filter:"contains",
+                autoBind: false,
+                autoWidth: true,
+                filter: "contains",
                 select: this.fSelect,
                 change: this.fChange,
-                template:'#: data.descricao# / #: data.especificacao#'
+                template: '#: data.descricao# / #: data.especificacao#'
             },
             popupEditor: {
-                title:"Novo item",
-                width:1000, height:305,
-                modal:false,
+                title: "Novo item",
+                width: 1000, height: 305,
+                modal: false,
                 useIframe: false,
-                visible:false,
-                content:{url:"/views/consumo/produtoform.html"},
-                open:function(){},
+                visible: false,
+                content: {url: "/views/consumo/produtoform.html"},
+                open: function () {
+                },
             },
             ds: myapp.ds.produto,
             selected: {
@@ -65,7 +66,7 @@ myAngular
                 descricao: null, especificacao: null,
                 idUnidade: null
             },
-            noItem:true,
+            noItem: true,
             fClear: function () {
                 myUnidade.fClear();
                 myProduto.selected = {
@@ -80,7 +81,7 @@ myAngular
                     myProduto.selected = e.dataItem;
                     myUnidade.selected = e.dataItem.idUnidade;
                     myConsumo.selected.dtQuandoRecebeu = new Date();
-                    myProduto.noItem=false;
+                    myProduto.noItem = false;
                     //if (e.dataItem.nome !== null)
                     //    mycontact.setFilter(e.dataItem);
                 }
@@ -92,28 +93,28 @@ myAngular
             },
             fAddProduto: function (widgetId, value) {
                 console.log(JSON.stringify(widgetId))
-                if(widgetId == "codBar"){
+                if (widgetId == "codBar") {
 
-                   this.selected.codigoBarra=value
-                }else{
-                   this.selected.descricao=value
+                    this.selected.codigoBarra = value
+                } else {
+                    this.selected.descricao = value
                 }
             },
-            fSalvar:function() {
-                myProduto.selected.idUnidade=myUnidade.selected;
+            fSalvar: function () {
+                myProduto.selected.idUnidade = myUnidade.selected;
                 myProduto.selected.idProdutoConsumo = null;
                 console.log(JSON.stringify(myProduto.selected));
                 myapp.ds.produto.add(myProduto.selected);
                 myapp.ds.produto.sync();
             },
-            fRequestEnd: function(e){
+            fRequestEnd: function (e) {
                 console.log(JSON.stringify(e.type));
                 // console.log(JSON.stringify(e.sender));
                 console.log(JSON.stringify(e.response));
             }
         };
-        myProduto.codBarrasOptions.select=myProduto.fSelect;
-        myProduto.descricaoOptions.select=myProduto.fSelect;
+        myProduto.codBarrasOptions.select = myProduto.fSelect;
+        myProduto.descricaoOptions.select = myProduto.fSelect;
         $scope.produto = myProduto;
         myapp.ds.produto.bind('requestEnd', myProduto.fRequestEnd);
 
@@ -166,7 +167,7 @@ myAngular
                 myapp.ds.consumo.sync();
                 //myConsumo.fClear();
             },
-            fRemove: function(){
+            fRemove: function () {
 
             },
             // fRequestEnd: function(e){

@@ -1,7 +1,7 @@
 var myapp = {
     ds: {},
     dsi: {},
-    model:{},
+    model: {},
     dropdown: {},
     appUrl: "http://172.23.64.51:8080/EstoqueREST/webresources/",
     //appUrl: "http://localhost:8080/EstoqueREST/webresources/",
@@ -277,7 +277,7 @@ myapp.dsi.fasesEmprestimoBemPermanente = {
     }
 };
 
-myapp.dsi.statusEmprestimoBemPermanente= {
+myapp.dsi.statusEmprestimoBemPermanente = {
     pageSize: 10,
     transport: myapp.setTransport('jpa.tbstatusemprestimobempermanente', 'idStatus'),
     // sort: {field: "descricao", dir: "asc"},
@@ -286,7 +286,7 @@ myapp.dsi.statusEmprestimoBemPermanente= {
             id: 'idStatus',
             fields: {
                 idStatus: {type: "number", editable: false, defaultValue: null},
-                descricao: {type: "string", defaultValue:1}
+                descricao: {type: "string", defaultValue: 1}
             }
         }
     }

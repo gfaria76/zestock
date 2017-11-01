@@ -22,7 +22,7 @@ myAngular
                 idQuemRecebeu: null
             },
             historico: {
-                idHistoricoConsumo:null,
+                idHistoricoConsumo: null,
                 idMaterialRetirado: {},
                 quantidadeRetirada: 0,
                 motivoRetirada: "",
@@ -60,8 +60,10 @@ myAngular
                     },
                     // {field: "idFabricante", title: "Fabricante"},
                     // {field: "dtFabricacao", title: "Dt.Fabric.", format: "{0:dd/MMM/yyyy}"},
-                    {field: "dtValidade", title: "Dt.Validade", width: "10%", editable: false,
-                        format: myapp.dateformat},
+                    {
+                        field: "dtValidade", title: "Dt.Validade", width: "10%", editable: false,
+                        format: myapp.dateformat
+                    },
                     {field: "quantidadeEmEstoque", title: "Qtd.", validation: {min: 0, required: true}},
                     {command: [myapp.btEdit], title: "", width: "5em"}
 

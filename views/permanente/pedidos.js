@@ -1,4 +1,4 @@
-            'use strict';
+'use strict';
 
 myAngular
     .config(['$routeProvider', function($routeProvider) {
@@ -21,7 +21,8 @@ myAngular
                     field: "idNumPatrimonio", title: "Bem permanente", width: "30%",
                     template: "#=idNumPatrimonio.descricaoBem#"
                 },
-                {field: "idSolicitante", title: "Solicitante",
+                {
+                    field: "idSolicitante", title: "Solicitante",
                     template: "#=idSolicitante.nomeUsuario#"
                 },
                 {field: "dtPrevistaRetirada", title: "Data de retirada"},

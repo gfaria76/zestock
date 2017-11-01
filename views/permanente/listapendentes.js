@@ -52,19 +52,19 @@ myAngular
                 var grid = $("#gridPendentes").data("kendoGrid");
                 var list = grid.select();
                 var gridList = [];
-                for(var i=0; i<list.length; i++){
+                for (var i = 0; i < list.length; i++) {
                     gridList.push(grid.dataItem(list[i]))
                 }
                 var aprovado = myapp.ds.statusEmprestimoBemPermanente.get(2);
-                for(var i=0; i<gridList.length; i++) {
+                for (var i = 0; i < gridList.length; i++) {
                     var item = gridList[i];
-                    item.set("idStatusEmprestimo",aprovado);
+                    item.set("idStatusEmprestimo", aprovado);
                     console.log(JSON.stringify(item.idStatusEmprestimo));
                     var fase = new myapp.model.fasesEmprestimoBemPermanente;
-                    fase.set("idPedidoEmprestimo",item);
+                    fase.set("idPedidoEmprestimo", item);
                     fase.set("dtStatus", new Date());
-                    fase.set("idStatus",aprovado);
-                    fase.set("idResponsavel",myapp.user);
+                    fase.set("idStatus", aprovado);
+                    fase.set("idResponsavel", myapp.user);
                     myapp.ds.fasesEmprestimoBemPermanente.add(fase);
                 }
                 myapp.ds.emprestimoBemPermanente.sync();

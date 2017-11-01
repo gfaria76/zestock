@@ -9,10 +9,10 @@ myAngular
     }])
     .controller('historicoConsumoCtrl', function ($scope) {
         var historicoConsumo = {
-          selected: {
-              idHistoricoConsumo: null, idMaterialRetirado: null, quantidadeRetirada: null,
-              motivoRetirada: null, idQuemRetirou:null, dtRetirada: null
-          },
+            selected: {
+                idHistoricoConsumo: null, idMaterialRetirado: null, quantidadeRetirada: null,
+                motivoRetirada: null, idQuemRetirou: null, dtRetirada: null
+            },
             mainGridOptions: {
                 dataSource: myapp.ds.historicoConsumo,
                 //height: 550,
@@ -37,7 +37,8 @@ myAngular
                     {
                         field: "quantidadeRetirada", title: "Qtd.", validation: {
                         min: 0, required: true
-                    }},
+                    }
+                    },
                     {
                         field: "motivoRetirada", title: "Justificativa", width: "10%"
                     },
@@ -46,7 +47,7 @@ myAngular
                         template: "#=idQuemRetirou.nomeUsuario#", width: "15%"
                     },
                     {field: "dtRetirada", title: "Dt.Alteração", width: "10%", format: myapp.dateformat}]
-          }
+            }
         };
         $scope.historicoConsumo = historicoConsumo;
     });

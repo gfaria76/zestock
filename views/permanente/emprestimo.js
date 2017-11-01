@@ -71,11 +71,11 @@ myAngular
         };
         $scope.locaisLocacao = myLocaisLocacao;
 
-        var myFasesEmprestimoBemPermanente ={
+        var myFasesEmprestimoBemPermanente = {
             ds: myapp.ds.fasesEmprestimoBemPermanente,
             selected: {
                 idFasesEmprestimo: null,
-                idPedidoEmprestimo:null,
+                idPedidoEmprestimo: null,
                 dtStatus: null,
                 idStatus: null,
                 idResponsavel: null
@@ -101,7 +101,7 @@ myAngular
                 dtPrevistaDevolucao: null,
                 idSolicitante: null,
                 idNumPatrimonio: null,
-                idStatusEmprestimo:null
+                idStatusEmprestimo: null
             },
             fClear: function () {
                 myBemPermanente.fClear();
