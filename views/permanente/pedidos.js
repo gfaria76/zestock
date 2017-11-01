@@ -8,6 +8,7 @@ myAngular
         });
     }])
     .controller('pedidosCtrl', function($scope) {
+        myapp.ds.emprestimoBemPermanente.filter({});
         $scope.mainGridOptions = {
             dataSource: myapp.ds.emprestimoBemPermanente,
             //height: ,
@@ -15,13 +16,14 @@ myAngular
             sortable: true,
             pageable: true,
             editable: "inline",
-            toolbar: ["create"],
             columns: [
                 {
                     field: "idNumPatrimonio", title: "Bem permanente", width: "30%",
                     template: "#=idNumPatrimonio.descricaoBem#"
                 },
-                {field: "idSolicitante", title: "Solicitante"},
+                {field: "idSolicitante", title: "Solicitante",
+                    template: "#=idSolicitante.nomeUsuario#"
+                },
                 {field: "dtPrevistaRetirada", title: "Data de retirada"},
                 {field: "dtPrevistaDevolucao", title: "Data de devolução"},
                 {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
@@ -41,7 +43,7 @@ myAngular
                 // filterable: true,
                 // sortable: true,
                 // pageable: true,
-                // editable: "inline",
+                editable: "inline",
                 // toolbar: ["create"],
                 columns: [
                     {field: "dtStatus", title: "Data Status"},
@@ -51,7 +53,8 @@ myAngular
                     },
                     {
                         field: "idResponsavel", title: "Responsavel",
-                        template: "#=idResponsavel.nomeUsuario#"
+                        template: "#=idResponsavel.nomeUsuario#",
+                        editable: false
                     }
                 ]
             };

@@ -1,8 +1,9 @@
 var myapp = {
     ds: {},
     dsi: {},
+    model:{},
     dropdown: {},
-    appUrl: "http://localhost:8080/EstoqueREST/webresources/",
+    appUrl: "http://172.23.64.51:8080/EstoqueREST/webresources/",
     user: {
         idUsuario: 1,
         nomeUsuario: "Gedson Faria",
@@ -188,7 +189,7 @@ myapp.dsi.bemPermanente = {
             fields: {
                 idBemPermanente: {type: "serial", editable: false, defaultValue: null},
                 descricaoBem: {type: "string", defaultValue: ' '},
-                dtEntrada: {type: "string", defaultValue: null},
+                dtEntrada: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
                 salaAlocacao: {defaultValue: null},
                 observacao: {type: "string"},
                 numPatrimonio: {type: "string", defaultValue: null},
@@ -241,10 +242,11 @@ myapp.dsi.emprestimoBemPermanente = {
             fields: {
                 idPedidoEmprestimo: {type: "number", editable: false, defaultValue: null},
                 justificativa: {type: "string", defaultValue: ' '},
-                dtPrevistaRetirada: {type: "string", defaultValue: null},
-                dtPrevistaDevolucao: {type: "string", defaultValue: null},
+                dtPrevistaRetirada: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                dtPrevistaDevolucao: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
                 idSolicitante: {defaultValue: {idUsuario: 1, nomeUsuario: ""}},
-                idNumPatrimonio: {defaultValue: {idBemPermanente: 1, numPatrimonio: ""}}
+                idNumPatrimonio: {defaultValue: {idBemPermanente: 1, numPatrimonio: ""}},
+                idStatusEmprestimo: {defaultValue: {idStatus: 1, descricao: ""}}
             }
         }
     }
@@ -260,9 +262,24 @@ myapp.dsi.fasesEmprestimoBemPermanente = {
             fields: {
                 idFasesEmprestimo: {type: "number", editable: false, defaultValue: null},
                 idPedidoEmprestimo: {defaultValue: {idPedidoEmprestimo: 1}},
-                dtStatus: {type: "string", defaultValue: null},
-                idStatus: {defaultValue: {idStatus: 1}},
+                dtStatus: {type: "date", defaultValue: null, parse: myapp.parseIntDate},
+                idStatus: {defaultValue: {idStatus: 1, descricao: ""}},
                 idResponsavel: {defaultValue: {idUsuario: 1, nomeUsuario: ""}}
+            }
+        }
+    }
+};
+
+myapp.dsi.statusEmprestimoBemPermanente= {
+    pageSize: 10,
+    transport: myapp.setTransport('jpa.tbstatusemprestimobempermanente', 'idStatus'),
+    // sort: {field: "descricao", dir: "asc"},
+    schema: {
+        model: {
+            id: 'idStatus',
+            fields: {
+                idStatus: {type: "number", editable: false, defaultValue: null},
+                descricao: {type: "string", defaultValue:1}
             }
         }
     }
@@ -326,4 +343,5 @@ $.each(myapp.dsi, function (i, item) {
             + JSON.stringify(e.xhr.state), 'error');
     };
     myapp.ds[i] = new kendo.data.DataSource(item);
+    myapp.model[i] = new kendo.data.Model.define(item.schema.model)
 });

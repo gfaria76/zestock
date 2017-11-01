@@ -45,6 +45,15 @@
                                    k-format="'dd/MMM/yyyy'"
                                    k-ng-model="emprestimoBemPermanente.selected.dtPrevistaDevolucao"/>
                         </div>
+                        <!--<div class="form-group col-sm-4 col-md-3">-->
+                            <!--<label>Status</label>-->
+                            <!--<input kendo-box-->
+                                   <!--class="form-control"-->
+                                   <!--k-data-value-field="'idStatus.idStatus'"-->
+                                   <!--k-data-text-field="'idStatus.descricao'"-->
+                                   <!--ng-disabled="true"-->
+                                   <!--ng-model="fasesEmprestimoBemPermanente.selected.idStatus"/>-->
+                        <!--</div>-->
                     </div>  <!--panel body-->
                     <div class="panel col-md-3">
                         <div class="form-group" style="height:100%">
@@ -62,10 +71,13 @@
                 </kendo-button>
                 <kendo-button icon="'k-icon k-i-cancel'" ng-click="emprestimoBemPermanente.fClear()">Limpar
                 </kendo-button>
+                <kendo-button icon="'k-icon k-i-cancel'" ng-click="emprestimoBemPermanente.fCreateStatus()">STATUS
+                </kendo-button>
             </div>
         </div>  <!--panel-->
     </div>  <!--container-->
     {{emprestimoBemPermanente.selected}}
+    {{fasesEmprestimoBemPermanente.selected}}
     <!--<kendo-grid options="mainGridOptions" k-on-change="consumo.onGridRowSelect(data, dataItem, columns)"></kendo-grid>-->
     <!--<kendo-grid options="mainGridOptions"></kendo-grid>-->
 </div>

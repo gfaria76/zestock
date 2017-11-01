@@ -33,7 +33,7 @@ myAngular
                 dataSource: myapp.ds.consumo,
                 //height: 550,
                 selectable: "row",
-                filterable: true,
+                // filterable: true,
                 sortable: true,
                 pageable: true,
                 reorderable: true,
@@ -41,27 +41,30 @@ myAngular
                 editable: "inline",
                 //toolbar: ["create"],
                 columns: [
-                    {field: "idConsumo", title: "ID", width: "5%"},
+                    {field: "idConsumo", title: "ID", width: "5%", editable: false},
                     {
-                        field: "idProduto", title: "Produto",
+                        field: "idProduto", title: "Produto", editable: false,
                         template: "#=idProduto.descricao#", width: "25%"
                     },
                     {
-                        field: "idProduto", title: "Especificação",
+                        field: "idProduto", title: "Especificação", editable: false,
                         template: "#=idProduto.especificacao#", width: "25%"
                     },
                     {
-                        field: "idProduto", title: "Unidade", width: "10%",
+                        field: "idProduto", title: "Unidade", width: "8%", editable: false,
                         template: "#=idProduto.idUnidade.unidade#"
                     },
                     {
-                        field: "idProduto", title: "Fabricante",
+                        field: "idProduto", title: "Fabricante", editable: false,
                         template: "#=(idFabricante==null?null:idFabricante.fabricante)#", width: "15%"
                     },
                     // {field: "idFabricante", title: "Fabricante"},
                     // {field: "dtFabricacao", title: "Dt.Fabric.", format: "{0:dd/MMM/yyyy}"},
-                    {field: "dtValidade", title: "Dt.Validade", width: "10%", format: myapp.dateformat},
+                    {field: "dtValidade", title: "Dt.Validade", width: "10%", editable: false,
+                        format: myapp.dateformat},
                     {field: "quantidadeEmEstoque", title: "Qtd.", validation: {min: 0, required: true}},
+                    {command: [myapp.btEdit], title: "", width: "5em"}
+
 
                     //template: "#=idProduto.descricao idProduto.especificacao#"
                     //{field: "fabricante", title: "Fabricante", width: "40%"},
