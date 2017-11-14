@@ -12,7 +12,7 @@ myAngular
         $scope.mainGridOptions = {
             dataSource: myapp.ds.emprestimoBemPermanente,
             //height: ,
-            filterable: true,
+            filterable: false,
             sortable: true,
             pageable: true,
             editable: "inline",
@@ -25,7 +25,8 @@ myAngular
                     field: "idSolicitante", title: "Solicitante",
                     template: "#=idSolicitante.nomeUsuario#"
                 },
-                {field: "dtPrevistaRetirada", title: "Data de retirada"},
+                {field: "idStatusEmprestimo", title: "Status atual",
+                 template: "#=idStatusEmprestimo.descricao#"},
                 {field: "dtPrevistaDevolucao", title: "Data de devolução"},
                 {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
             ]

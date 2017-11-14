@@ -8,159 +8,96 @@ myAngular
         });
     }])
     .controller('emprestimoCtrl', function($scope) {
-        var myBemPermanente = {
-            ds: myapp.ds.bemPermanente,
-            selected: {
-                idBemPermanente: null, descricaoBem: null,
-                dtEntrada: null, salaAlocacao: null,
-                observacao: null, numPatrimonio: null,
-                idEstadoConservacao: null,
-                idCoResponsavel: null
+        myapp.ds.emprestimoBemPermanente.fetch()
+        myapp.ds.fasesEmprestimoBemPermanente.fetch()
+        myapp.ds.statusEmprestimoBemPermanente.fetch()
+        var ctrl = {
+            bemPermanente:{},
+            empPermanente: {}, //selecao de produto
+            nomebusca: null,
+            // fClear: function () { //nao usado
+            //     // ctrl.unidade = new myapp.model.unidade
+            //     //ctrl.fabricante = new myapp.model.fabricante
+            //     ctrl.produto = new myapp.model.produto
+            //     ctrl.consumo = new myapp.model.consumo
+            // },
+            //quando digita no campo busca, filtra o grid de consumo
+            fChange: function () {
+                //modificar os filtros do grid
+                if (ctrl.nomebusca.length >= 0)
+                    myapp.ds.bemPermanente.filter({
+                        logic: "or", filters: [
+                            {field: "numPatrimonio", operator: "contains", value: ctrl.nomebusca},
+                            {field: "descricaoBem", operator: "contains", value: ctrl.nomebusca},
+                            {field: "salaAlocacao.setor", operator: "contains", value: ctrl.nomebusca}]
+                    });
             },
-            fClear: function () {
-                myLocaisLocacao.fClear();
-                myEstadoBemPermanente.fClear()
-                myBemPermanente.selected = {
-                    idBemPermanente: null, descricaoBem: null,
-                    dtEntrada: null, salaAlocacao: null,
-                    observacao: null, numPatrimonio: null,
-                    idEstadoConservacao: null,
-                    idCoResponsavel: null
-                };
+            //chamada antes de abrir a janela de nova entrada em estoque
+            fNovaEntrada: function () {
+                ctrl.empPermanente = new myapp.model.emprestimoBemPermanente;
+                ctrl.empPermanente.set('idNumPatrimonio' , ctrl.bemPermanente);
             },
-            fSelect: function (e) {
-                //this é o .kendoComboBox
-                if (e.item !== null) {
-                    myBemPermanente.selected = e.dataItem;
-                }
+            //salva dados da janela Entrada
+            fSaveConsumo: function () {
+                var pendente =  myapp.ds.statusEmprestimoBemPermanente.get(1)
+                //ajustar tabela grid
+                ctrl.empPermanente.set('idStatusEmprestimo',pendente)
+                //emprestimoBemPermanente
+                //nao serve para alterar pois edicao nao torna objeto dirty
+                console.log(JSON.stringify(ctrl.empPermanente))
+                myapp.ds.emprestimoBemPermanente.add(ctrl.empPermanente)
+                myapp.ds.emprestimoBemPermanente.sync()
+                //historico-emprestimo
+                var historico = new myapp.model.fasesEmprestimoBemPermanente
+                historico.set('idPedidoEmprestimo', ctrl.empPermanente)
+                historico.set('dtStatus' , new Date())
+                historico.set('idStatus', pendente)
+                historico.idResponsavel = myapp.user
+                myapp.ds.fasesEmprestimoBemPermanente.add(historico)
+                console.log(JSON.stringify(historico))
+                myapp.ds.fasesEmprestimoBemPermanente.sync()
             }
         };
-        $scope.bemPermanente = myBemPermanente;
+        $scope.ctrl = ctrl;
 
-        var myEstadoBemPermanente = {
-            ds: myapp.ds.estadoBemPermanente,
-            selected: {
-                idEstadoBemPermanente: null,
-                descricaoEstadoFisico: null
-            },
-            fClear: function () {
-                myEstadoBemPermanente.selected = {
-                    idEstadoBemPermanente: null,
-                    descricaoEstadoFisico: null
-                };
-            }
-        };
-        $scope.estadoBemPermanente = myEstadoBemPermanente;
+        //WINDOW ENTRADA
+        $scope.wEntradaOptions = {
+            title: "Novo Emprestimo",
+            width: 600, visible: false, modal: true,
+            content: "views/permanente/addemprestimo.html"
+        }
 
-        var myLocaisLocacao = {
-            ds: myapp.ds.locaisLocacao,
-            selected: {
-                idLocaLotacao: null,
-                unidadeSetorial: null,
-                setor: null,
-                sala: null
-            },
-            fClear: function () {
-                myLocaisLocacao.selected = {
-                    idLocaLotacao: null,
-                    unidadeSetorial: null,
-                    setor: null,
-                    sala: null
-                };
-            }
-        };
-        $scope.locaisLocacao = myLocaisLocacao;
-
-        var myFasesEmprestimoBemPermanente = {
-            ds: myapp.ds.fasesEmprestimoBemPermanente,
-            selected: {
-                idFasesEmprestimo: null,
-                idPedidoEmprestimo: null,
-                dtStatus: null,
-                idStatus: null,
-                idResponsavel: null
-            }
-        };
-        $scope.fasesEmprestimoBemPermanente = myFasesEmprestimoBemPermanente;
-
-        var myStatusEmprestimoBemPermanente = {
-            ds: myapp.ds.statusEmprestimoBemPermanente,
-            selected: {
-                idStatus: null,
-                descricao: null
-            }
-        };
-        $scope.statusEmprestimoBemPermanente = myStatusEmprestimoBemPermanente;
-
-        var myEmprestimoBemPermanente = {
-            ds: myapp.ds.emprestimoBemPermanente,
-            selected: {
-                idPedidoEmprestimo: null,
-                justificativa: null,
-                dtPrevistaRetirada: null,
-                dtPrevistaDevolucao: null,
-                idSolicitante: null,
-                idNumPatrimonio: null,
-                idStatusEmprestimo: null
-            },
-            fClear: function () {
-                myBemPermanente.fClear();
-                myEmprestimoBemPermanente.selected = {
-                    idPedidoEmprestimo: null,
-                    justificativa: null,
-                    dtPrevistaRetirada: null,
-                    dtPrevistaDevolucao: null,
-                    idSolicitante: null,
-                    idNumPatrimonio: null,
-                    idStatusEmprestimo: null
-                };
-            },
-            fSalvar: function () {
-                if (myBemPermanente.selected.descricaoBem != null) {
-                    myEmprestimoBemPermanente.selected.idNumPatrimonio = myBemPermanente.selected;
-                }
-                console.log(JSON.stringify(myEmprestimoBemPermanente.selected));
-                myapp.ds.emprestimoBemPermanente.add(myEmprestimoBemPermanente.selected);
-                myapp.ds.emprestimoBemPermanente.sync();
-                //myConsumo.fClear();
-            },
-            fCreateStatus: function () {
-                if (myEmprestimoBemPermanente.selected.idPedidoEmprestimo != null) {
-                    myEmprestimoBemPermanente.selected.idPedidoEmprestimo = myEmprestimoBemPermanente.selected;
-                }
-
-            }
-        };
-        $scope.emprestimoBemPermanente = myEmprestimoBemPermanente;
         //GRID KENDO
-        // $scope.mainGridOptions = {
-        //     dataSource: myapp.ds.emprestimoBemPermanente,
-        //     //height: 550,
-        //     //selectable: "row",
-        //     //filterable: true,
-        //     //sortable: true,
-        //     pageable: true,
-        //     reorderable: true,
-        //     resizable: true,
-        //     editable: "inline",
-        //     toolbar: ["create"],
-        //     columns: [
-        //         {
-        //             field: "idPedidoEmprestimo", title: "ID", width: "10%"},
-        //
-        //         {   field: "idNumPatrimonio", title: "Bem Permanente",
-        //             template: "#=idNumPatrimonio.idNumPatrimonio.descricaoBem#", width: "30%"},
-        //
-        //         {   field: "idSolicitante", title: "Solicitante",
-        //             template: "#=idSolicitante.idUsuario.nomeUsuario#", width: "30%"},
-        //
-        //         {field: "justificativa", title: "Justificativa", width: "30%"},
-        //
-        //         {field: "dtPrevistaRetirada", title: "Dt.Prev.Ret.", format: "{0:dd/MMM/yyyy}"},
-        //
-        //         {field: "dtPrevistaDevolucao", title: "Dt.Prev.Dev", format: "{0:dd/MMM/yyyy}"},
-        //
-        //         {command: [myapp.btEdit, myapp.btDestroy], title: "", width: "8em"}
-        //     ]
-        // };
+        $scope.mainGridOptions = {
+            dataSource: myapp.ds.bemPermanente,
+            //height: 550,
+            selectable: "row",
+            //filterable: true,
+            sortable: true,
+            pageable: true,
+            reorderable: true,
+            resizable: true,
+            change: function (e) {
+                var selectedRows = this.select() //array
+                var dataItem = this.dataItem(selectedRows[0])
+                ctrl.bemPermanente = dataItem
+                this.refresh()
+            },
+            // toolbar: [
+            //     {name: "create", text: "Entrada",iconClass: "k-font-icon", imageClass: "k-i-plus"},
+            //     {name: "edit", text: "Saída",iconClass: "k-font-icon", imageClass: "k-i-minus"}
+            //     ],
+            columns: [
+                {field: "idBemPermanente", title: "ID", width: "5%"},
+                {field: "numPatrimonio", title: "Num. Património", width: "10%"},
+                {field: "descricaoBem", title: "Permanente", width: "25%"},
+                {field: "salaAlocacao", title: "Setor Alocado",
+                 template:"#=salaAlocacao.setor#", width: "10%"},
+                {field: "salaAlocacao", title: "Sala Alocado",
+                    template:"#=salaAlocacao.sala#", width: "10%"},
+                {field: "observacao", title: "Observação", width: "10%"},
+                {field: "idEstadoConservacao", title: "Estado",
+                 template: "#=idEstadoConservacao.descricaoEstadoFisico#", width: "10%"}
+            ]
+        };
     });
